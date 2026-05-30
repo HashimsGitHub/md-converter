@@ -8,7 +8,7 @@ from markitdown import MarkItDown
 st.set_page_config(
     page_title="MD//CONVERTER",
     page_icon="⚡",
-    layout="centered",
+    layout="wide",
 )
 
 # ── CSS: ported exactly from the DeepSeek HTML design ─────────────────────────
@@ -32,32 +32,65 @@ st.markdown("""
     --glow-cyan-soft: 0 0 4px #00ffe7, 0 0 8px rgba(0,255,231,0.4);
 }
 
-html, body, [class*="css"] {
+/* ── Force black bg regardless of browser/OS theme ── */
+html {
+    background: #030612 !important;
+}
+body, [data-testid="stAppViewContainer"], [data-testid="stApp"],
+[data-testid="stMain"], .main, section.main,
+[class*="css"] {
     font-family: 'Rajdhani', sans-serif !important;
-    background: radial-gradient(circle at 20% 30%, #050b1a, #010108) !important;
+    background: #030612 !important;
+    background-color: #030612 !important;
     color: var(--text-main) !important;
 }
-
+/* Sidebar & all wrappers */
+[data-testid="stSidebar"],
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stBottom"] {
+    background: #030612 !important;
+    background-color: #030612 !important;
+}
+/* Radial gradient injected via pseudo on the main container */
+[data-testid="stAppViewContainer"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 20% 30%, #050b1a 0%, #030612 60%);
+    pointer-events: none;
+    z-index: 0;
+}
 /* scanlines */
-body::before {
+[data-testid="stAppViewContainer"]::after {
     content: "";
     position: fixed;
     inset: 0;
     background: repeating-linear-gradient(
         0deg,
         transparent, transparent 2px,
-        rgba(0,255,231,0.02) 2px, rgba(0,255,231,0.02) 4px
+        rgba(0,255,231,0.018) 2px, rgba(0,255,231,0.018) 4px
     );
     pointer-events: none;
-    z-index: 9999;
+    z-index: 1;
 }
 
 #MainMenu, footer, header { visibility: hidden; }
+
+/* ── Full-width centered content column ── */
 .block-container {
-    padding: 0.5rem 1.2rem 2rem !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    position: relative;
+    z-index: 2;
+}
+/* Inner content wrapper — centered column, max 900px */
+.block-container > div:first-child {
     max-width: 900px !important;
-    background: rgba(3,6,18,0.65);
-    box-shadow: 0 0 25px rgba(0,255,231,0.1);
+    margin: 0 auto !important;
+    padding: 0.5rem 1.5rem 3rem !important;
 }
 
 /* ── Header ── */
