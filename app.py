@@ -40,6 +40,8 @@ st.markdown("""
     --success-c:     #5effbc;
     --error-c:       #ff7780;
     --step-bg:       rgba(0, 30, 50, 0.5);
+    --uploader-bg:   #0a1222;
+    --uploader-card-bg: #030812;
 }
 
 /* ── Force NEBULA DRIVE background everywhere ── */
@@ -196,18 +198,9 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── File uploader — all layers ── */
-div[data-testid="stFileUploader"],
-div[data-testid="stFileUploader"] > div,
-div[data-testid="stFileUploader"] section,
-div[data-testid="stFileUploader"] section > div,
-div[data-testid="stFileUploaderDropzone"],
-div[data-testid="stFileUploaderDropzoneInstructions"],
-div[data-testid="stFileUploaderDropzoneInstructions"] > div {
-    background: rgba(8, 18, 32, 0.7) !important;
-    background-color: rgba(8, 18, 32, 0.7) !important;
-}
+/* ── File uploader main container ── */
 div[data-testid="stFileUploader"] {
+    background: rgba(8, 18, 32, 0.7) !important;
     border: 1px dashed var(--glass-border) !important;
     border-radius: 1.8rem !important;
     backdrop-filter: blur(8px);
@@ -240,7 +233,6 @@ section[data-testid="stFileUploaderDropzone"] small {
     display: none !important;
 }
 /* Override the button's own inner text to show clean label */
-/* Hide Streamlit's own button text ("Upload"), keep only our label */
 div[data-testid="stFileUploader"] button {
     color: transparent !important;
     font-size: 0 !important;
@@ -279,62 +271,79 @@ div[data-testid="stFileUploader"] button:hover::after {
     color: #fff !important;
 }
 
-/* ── Uploaded file badges — nuke every possible layer ── */
-[data-testid="stFileUploaderFile"],
-[data-testid="stFileUploaderFile"] *,
-[data-testid="stFileUploaderFile"] > div,
-[data-testid="stFileUploaderFile"] > div > div,
-[data-testid="stFileUploaderFile"] > div > div > div,
-[data-testid="stFileUploaderFile"] span,
-[data-testid="stFileUploaderFile"] p,
-[data-testid="stFileUploaderFile"] small,
-[data-testid="stFileUploaderFile"] li,
-[data-testid="stFileUploaderFile"] section {
-    background:       #030812 !important;
-    background-color: #030812 !important;
-    border-color: transparent !important;
-    box-shadow: none !important;
-}
+/* ── UPLOADED FILE CARDS - GREEN NEON THEME ── */
+/* Main container for each uploaded file */
 [data-testid="stFileUploaderFile"] {
-    border: none !important;
-    border-left: 3px solid var(--cyan) !important;
+    background: #0a1222 !important;
+    background-color: #0a1222 !important;
+    border: 1px solid rgba(0, 255, 200, 0.3) !important;
+    border-left: 4px solid #5effbc !important;
     border-radius: 0.75rem !important;
-    padding: 0.4rem 0.8rem !important;
-    overflow: hidden;
+    padding: 0.6rem 1rem !important;
+    margin: 0.5rem 0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
 }
-/* Filename text — solid black, always readable */
-[data-testid="stFileUploaderFileName"],
-[data-testid="stFileUploaderFileName"] * {
-    color:        #000000 !important;
-    font-family:  'Fira Code', monospace !important;
-    font-size:    0.78rem !important;
-    font-weight:  700 !important;
-    background:   transparent !important;
+
+/* All child containers */
+[data-testid="stFileUploaderFile"] > div,
+[data-testid="stFileUploaderFile"] div[data-testid="stFileUploaderFileDetails"],
+[data-testid="stFileUploaderFile"] div[data-testid="stFileUploaderFileData"],
+[data-testid="stFileUploaderFile"] div[role="row"] {
+    background: transparent !important;
     background-color: transparent !important;
-    text-shadow:  none !important;
 }
+
+/* Filename text — neon green on dark background */
+[data-testid="stFileUploaderFileName"],
+[data-testid="stFileUploaderFileName"] *,
+[data-testid="stFileUploaderFile"] [data-testid="stMarkdown"] p,
+[data-testid="stFileUploaderFile"] span:not([data-testid="stFileUploaderDeleteBtn"] span) {
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+    text-shadow: 0 0 2px rgba(94, 255, 188, 0.3) !important;
+}
+
 /* File size text */
 [data-testid="stFileUploaderFileData"],
-[data-testid="stFileUploaderFileData"] * {
-    color:       rgba(0,255,255,0.6) !important;
-    font-size:   0.7rem !important;
-    background:  transparent !important;
-    background-color: transparent !important;
+[data-testid="stFileUploaderFileData"] *,
+div[data-testid="stFileUploaderFile"] small {
+    color: rgba(94, 255, 188, 0.7) !important;
+    font-size: 0.7rem !important;
+    font-family: 'Fira Code', monospace !important;
+    background: transparent !important;
 }
+
 /* File icon area */
 [data-testid="stFileUploaderFile"] svg {
-    color: var(--cyan) !important;
-    fill:  var(--cyan) !important;
+    color: #5effbc !important;
+    fill: #5effbc !important;
+    filter: drop-shadow(0 0 2px rgba(94,255,188,0.5));
 }
+
+/* Delete button - subtle neon */
 [data-testid="stFileUploaderDeleteBtn"] button {
-    color: rgba(0,255,255,0.5) !important;
-    background: transparent !important;
-    border: none !important;
-    border-radius: 50% !important;
+    color: rgba(94, 255, 188, 0.6) !important;
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(94, 255, 188, 0.3) !important;
+    border-radius: 30px !important;
+    padding: 4px 10px !important;
+    font-size: 0.7rem !important;
 }
 [data-testid="stFileUploaderDeleteBtn"] button:hover {
-    color: var(--error-c) !important;
+    color: #ff7780 !important;
+    border-color: #ff7780 !important;
     background: rgba(255,119,128,0.1) !important;
+}
+
+/* Progress bar inside uploader */
+[data-testid="stFileUploaderFile"] [role="progressbar"] {
+    background: rgba(94, 255, 188, 0.2) !important;
+}
+[data-testid="stFileUploaderFile"] [role="progressbar"] > div {
+    background: linear-gradient(90deg, #5effbc, #0ff) !important;
 }
 
 /* ── Convert button — primary neon ── */
