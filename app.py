@@ -218,6 +218,13 @@ div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructio
     display: none !important;
 }
 
+div[data-testid="stFileUploaderFileName"],
+div[data-testid="stFileUploaderFileData"],
+div[data-testid="stFileUploaderFile"] span,
+div[data-testid="stFileUploaderFile"] small {
+    color: #000000 !important;
+}
+
 div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"]::after {
     content: "Browse for files";
     color: #000000;
