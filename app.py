@@ -402,39 +402,42 @@ div[data-testid="stDownloadButton"] > button:hover {
 div[data-testid="stStatusWidget"] { display: none !important; }
 
 
-/* ── FILE UPLOADER — single clean block ── */
-/* Dark section background, neon cyan border */
-div[data-testid="stFileUploader"] section,
-div[data-testid="stFileUploader"] section > div,
-div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {
+/* ── FILE UPLOADER ── */
+/* Streamlit's button text is "Upload", dropzone text is "Drag and drop a file here"
+   No text injection — just style what exists natively */
+
+/* Dropzone area — dark bg, neon border */
+div[data-testid="stFileUploaderDropzone"] {
     background: rgba(8, 18, 32, 0.9) !important;
-    background-color: rgba(8, 18, 32, 0.9) !important;
-}
-div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {
     border: 1.5px solid rgba(0, 255, 255, 0.35) !important;
     border-radius: 1.25rem !important;
-    padding: 1.5rem !important;
 }
 
-/* Hide the outer large "Browse for files" zone wrapper — keep only the button */
-div[data-testid="stFileUploaderDropzoneInstructions"] {
+/* "Drag and drop" instruction text */
+div[data-testid="stFileUploaderDropzoneInstructions"] span,
+div[data-testid="stFileUploaderDropzoneInstructions"] p {
+    color: rgba(0, 255, 255, 0.6) !important;
+    font-family: 'Fira Code', monospace !important;
+    font-size: 0.82rem !important;
+}
+
+/* Hide file size limit text ("200MB per file") */
+div[data-testid="stFileUploaderDropzoneInstructions"] small {
     display: none !important;
 }
 
-/* The actual browse button — neon green, black bg */
-div[data-testid="stFileUploader"] button {
+/* "Upload" button — black bg, neon green text, NO pseudo-elements */
+div[data-testid="stFileUploaderDropzone"] button {
     background: #000000 !important;
     border: 1.5px solid #5effbc !important;
     border-radius: 40px !important;
     padding: 8px 28px !important;
     box-shadow: 0 0 12px rgba(94,255,188,0.25) !important;
-    transition: box-shadow 0.2s !important;
 }
-div[data-testid="stFileUploader"] button:hover {
+div[data-testid="stFileUploaderDropzone"] button:hover {
     box-shadow: 0 0 20px rgba(94,255,188,0.5) !important;
 }
-div[data-testid="stFileUploader"] button span,
-div[data-testid="stFileUploader"] button p {
+div[data-testid="stFileUploaderDropzone"] button span {
     color: #5effbc !important;
     font-family: 'Fira Code', monospace !important;
     font-size: 0.85rem !important;
@@ -442,18 +445,17 @@ div[data-testid="stFileUploader"] button p {
 }
 
 /* Uploaded file badge */
-div[data-testid="stFileUploaderFileName"],
-div[data-testid="stFileUploaderFileName"] *,
-div[data-testid="stFileUploaderFileData"],
-div[data-testid="stFileUploaderFile"] small {
-    color: #5effbc !important;
-    font-family: 'Fira Code', monospace !important;
-}
 div[data-testid="stFileUploaderFile"],
 div[data-testid="stFileUploaderFile"] > div,
 div[data-testid="stFileUploaderFile"] > div > div {
     background: rgba(8,18,32,0.9) !important;
     background-color: rgba(8,18,32,0.9) !important;
+}
+div[data-testid="stFileUploaderFileName"],
+div[data-testid="stFileUploaderFileData"],
+div[data-testid="stFileUploaderFile"] small {
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
 }
 
 /* ── Column alignment fix for result rows ── */
