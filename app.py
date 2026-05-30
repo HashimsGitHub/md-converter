@@ -40,8 +40,6 @@ st.markdown("""
     --success-c:     #5effbc;
     --error-c:       #ff7780;
     --step-bg:       rgba(0, 30, 50, 0.5);
-    --uploader-bg:   #0a1222;
-    --uploader-card-bg: #030812;
 }
 
 /* ── Force NEBULA DRIVE background everywhere ── */
@@ -142,7 +140,7 @@ h1, h2, h3, h4, h5, h6, p, span, div, label, .stMarkdown {
     margin-bottom: 1.5rem;
 }
 
-/* ── Step label (like NEBULA's section labels) ── */
+/* ── Step label ── */
 .nd-label {
     font-size: 0.75rem;
     font-weight: 600;
@@ -198,78 +196,132 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── File uploader — minimal dark theme, Streamlit default behaviour ── */
-/* Force dark bg on every wrapper layer */
-div[data-testid="stFileUploader"],
-div[data-testid="stFileUploader"] > div,
-div[data-testid="stFileUploader"] section,
-div[data-testid="stFileUploader"] section > div,
-div[data-testid="stFileUploaderDropzone"],
-div[data-testid="stFileUploaderDropzoneInstructions"],
-div[data-testid="stFileUploaderDropzoneInstructions"] > div {
-    background: rgba(8, 18, 32, 0.8) !important;
-    background-color: rgba(8, 18, 32, 0.8) !important;
-}
-
-/* Dropzone border */
-div[data-testid="stFileUploaderDropzone"] {
-    border: 1px dashed rgba(0,255,255,0.3) !important;
+/* ── FILE UPLOADER - COMPLETELY FIXED ── */
+/* Main container background */
+div[data-testid="stFileUploader"] {
+    background: rgba(8, 18, 32, 0.6) !important;
     border-radius: 1rem !important;
 }
-div[data-testid="stFileUploaderDropzone"]:hover {
-    border-color: rgba(0,255,255,0.6) !important;
+
+/* Dropzone area */
+div[data-testid="stFileUploaderDropzone"] {
+    background: rgba(8, 18, 32, 0.8) !important;
+    border: 1px dashed rgba(0, 255, 255, 0.4) !important;
+    border-radius: 1rem !important;
+    padding: 1.5rem !important;
 }
 
-/* Hint text and size hint */
+div[data-testid="stFileUploaderDropzone"]:hover {
+    border-color: rgba(0, 255, 255, 0.7) !important;
+    background: rgba(10, 22, 40, 0.9) !important;
+}
+
+/* Dropzone text - make it visible */
 div[data-testid="stFileUploaderDropzoneInstructions"] p,
 div[data-testid="stFileUploaderDropzoneInstructions"] span {
-    color: rgba(157, 198, 255, 0.8) !important;
-}
-div[data-testid="stFileUploaderDropzoneInstructions"] small {
-    color: rgba(0,255,255,0.45) !important;
+    color: #9dc6ff !important;
+    font-size: 0.9rem !important;
 }
 
-/* Streamlit's native Browse files button — just tint it cyan */
+div[data-testid="stFileUploaderDropzoneInstructions"] small {
+    color: rgba(0, 255, 255, 0.6) !important;
+    font-size: 0.75rem !important;
+}
+
+/* Browse button - clean, no duplicate text */
 div[data-testid="stFileUploaderDropzone"] button {
-    border-color: var(--cyan) !important;
-    color: var(--cyan) !important;
     background: transparent !important;
+    border: 1.5px solid var(--cyan) !important;
     border-radius: 40px !important;
+    padding: 6px 24px !important;
+    margin-top: 8px !important;
 }
-div[data-testid="stFileUploaderDropzone"] button:hover {
-    background: rgba(0,255,255,0.1) !important;
-}
+
 div[data-testid="stFileUploaderDropzone"] button span {
     color: var(--cyan) !important;
+    font-weight: 500 !important;
 }
 
-/* Uploaded file badge — dark bg, let Streamlit handle layout */
-div[data-testid="stFileUploaderFile"],
-div[data-testid="stFileUploaderFile"] > div,
-div[data-testid="stFileUploaderFile"] > div > div {
-    background: rgba(8, 18, 32, 0.9) !important;
-    background-color: rgba(8, 18, 32, 0.9) !important;
+div[data-testid="stFileUploaderDropzone"] button:hover {
+    background: rgba(0, 255, 255, 0.1) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3) !important;
 }
+
+/* Hide any duplicate "Upload" text that appears elsewhere */
+div[data-testid="stFileUploader"] button::after,
+div[data-testid="stFileUploader"] > div > div:first-child > span:not(:empty) {
+    display: none !important;
+}
+
+/* ── UPLOADED FILE CARDS - COMPLETELY READABLE ── */
+/* Each uploaded file card */
 div[data-testid="stFileUploaderFile"] {
-    border-left: 3px solid var(--success-c) !important;
-    border-radius: 0.5rem !important;
+    background: #0a1222 !important;
+    border: 1px solid rgba(0, 255, 255, 0.25) !important;
+    border-left: 4px solid var(--success-c) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.75rem 1rem !important;
+    margin: 0.5rem 0 !important;
 }
-/* Filename readable */
-div[data-testid="stFileUploaderFileName"] {
+
+/* File info container */
+div[data-testid="stFileUploaderFile"] > div {
+    background: transparent !important;
+}
+
+/* File name - NEON GREEN, clearly visible */
+div[data-testid="stFileUploaderFileName"],
+div[data-testid="stFileUploaderFile"] span[data-testid="stMarkdown"] p,
+div[data-testid="stFileUploaderFile"] .stMarkdown {
     color: var(--success-c) !important;
+    font-family: 'Fira Code', monospace !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    background: transparent !important;
 }
-/* File size readable */
+
+/* File size text - cyan, visible */
 div[data-testid="stFileUploaderFileData"],
-div[data-testid="stFileUploaderFile"] small {
-    color: rgba(0,255,255,0.6) !important;
+div[data-testid="stFileUploaderFile"] small,
+div[data-testid="stFileUploaderFile"] .stMarkdown small {
+    color: rgba(0, 255, 255, 0.7) !important;
+    font-size: 0.7rem !important;
+    font-family: 'Fira Code', monospace !important;
 }
-/* Icon tint */
+
+/* File icon */
 div[data-testid="stFileUploaderFile"] svg {
     color: var(--success-c) !important;
     fill: var(--success-c) !important;
 }
 
-/* Convert button — primary neon */
+/* Remove button - styled like Save button */
+div[data-testid="stFileUploaderDeleteBtn"] button {
+    background: transparent !important;
+    border: 1px solid rgba(0, 255, 255, 0.4) !important;
+    border-radius: 30px !important;
+    color: rgba(0, 255, 255, 0.7) !important;
+    font-size: 0.7rem !important;
+    padding: 4px 12px !important;
+}
+
+div[data-testid="stFileUploaderDeleteBtn"] button:hover {
+    background: rgba(255, 119, 128, 0.15) !important;
+    border-color: #ff7780 !important;
+    color: #ff7780 !important;
+}
+
+/* Progress bar inside upload card */
+div[data-testid="stFileUploaderFile"] [role="progressbar"] {
+    background: rgba(94, 255, 188, 0.15) !important;
+    border-radius: 10px !important;
+}
+div[data-testid="stFileUploaderFile"] [role="progressbar"] > div {
+    background: linear-gradient(90deg, var(--success-c), var(--cyan)) !important;
+    border-radius: 10px !important;
+}
+
+/* ── Convert button ── */
 div[data-testid="stButton"] > button {
     width: 100%;
     background: var(--btn-primary) !important;
@@ -306,7 +358,7 @@ div[data-testid="stProgressBar"] > div > div {
     box-shadow: 0 0 10px var(--cyan) !important;
 }
 
-/* ── Stats strip — glass ── */
+/* ── Stats strip ── */
 .nd-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -386,7 +438,7 @@ div[data-testid="stProgressBar"] > div > div {
     margin-top: 0.2rem;
 }
 
-/* ── Download individual — neon outline pill ── */
+/* ── Download individual button ── */
 div[data-testid="stDownloadButton"] > button {
     background: transparent !important;
     border: 1.2px solid var(--cyan) !important;
@@ -407,7 +459,7 @@ div[data-testid="stDownloadButton"] > button:hover {
     color: #fff !important;
 }
 
-/* ── Download all ZIP — primary pill ── */
+/* ── Download all ZIP ── */
 .dl-all-wrap div[data-testid="stDownloadButton"] > button {
     background: var(--btn-primary) !important;
     border: none !important;
@@ -424,7 +476,7 @@ div[data-testid="stDownloadButton"] > button:hover {
     box-shadow: 0 0 20px var(--cyan) !important;
 }
 
-/* ── Success box (like NEBULA's success-pulse) ── */
+/* ── Success box ── */
 .nd-success-pulse {
     background: var(--success-bg);
     border: 1px solid var(--cyan);
@@ -475,7 +527,7 @@ div[data-testid="stStatusWidget"] { display: none !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Topbar (NEBULA DRIVE exact replica) ──────────────────────────────────────
+# ── Topbar ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="nd-topbar">
   <div class="nd-logo">
@@ -490,7 +542,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Hero / section header ─────────────────────────────────────────────────────
+# ── Hero section ──────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="glass-panel">
   <div class="nd-section-title">✦ MARKDOWNER</div>
