@@ -127,6 +127,10 @@ st.markdown("""
     <hr style="margin-top:40px;">
     <div style="text-align:center; color:gray; font-size:14px;">
         Built with ❤️ using Streamlit & Microsoft MarkItDown<br>
-        © 2025 Hashim Hilal — Cloud Architect
+        © 2026 Hashim Hilal — QUT
+        <br><br>
+        <a href="https://hits.sh/markdowner.streamlit.app/">
+            <img alt="Hits" src="https://hits.sh/markdowner.streamlit.app.svg?label=Visitor%20%23&extraCount=0&color=007ec6"/>
+        </a>
     </div>
 """, unsafe_allow_html=True)
