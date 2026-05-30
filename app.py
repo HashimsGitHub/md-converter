@@ -196,8 +196,34 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── NO CUSTOM CSS FOR FILE UPLOADER - LEAVE IT DEFAULT ── */
-/* Streamlit's default file uploader already has readable text */
+
+/* ── Custom File Uploader Styling ── */
+div[data-testid="stFileUploader"] label,
+div[data-testid="stFileUploader"] small,
+div[data-testid="stFileUploader"] span,
+div[data-testid="stFileUploader"] p {
+    color: #000000 !important;
+}
+
+div[data-testid="stFileUploader"] section button {
+    color: #000000 !important;
+}
+
+div[data-testid="stFileUploader"] section {
+    background: rgba(255,255,255,0.95) !important;
+    border-radius: 12px !important;
+}
+
+div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"] > div > span {
+    display: none !important;
+}
+
+div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"]::after {
+    content: "Browse for files";
+    color: #000000;
+    font-weight: 600;
+}
+
 
 /* ── Convert button ── */
 div[data-testid="stButton"] > button {
