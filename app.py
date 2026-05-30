@@ -179,30 +179,54 @@ div[data-testid="stRadio"] > div > label[data-baseweb="radio"]:has(input:checked
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.3) !important;
 }
 
-/* File uploader */
+/* File uploader — force dark on every layer Streamlit renders */
+div[data-testid="stFileUploader"],
+div[data-testid="stFileUploader"] > div,
+div[data-testid="stFileUploader"] section,
+div[data-testid="stFileUploader"] section > div,
+div[data-testid="stFileUploaderDropzone"],
+div[data-testid="stFileUploaderDropzoneInstructions"] {
+    background: #0a0f1e !important;
+    background-color: #0a0f1e !important;
+}
+
 div[data-testid="stFileUploader"] {
-    border: 2px dashed rgba(0, 240, 255, 0.4) !important;
-    background: rgba(10, 15, 30, 0.6) !important;
+    border: 2px dashed rgba(0, 240, 255, 0.5) !important;
     border-radius: 4px !important;
-    padding: 2rem !important;
     transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
 }
 
 div[data-testid="stFileUploader"]:hover {
     border-color: var(--neon-cyan) !important;
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.2) !important;
-    background: rgba(10, 15, 30, 0.8) !important;
 }
 
-div[data-testid="stFileUploader"] label {
+/* The drag-and-drop inner zone */
+div[data-testid="stFileUploaderDropzone"] {
+    border: none !important;
+    padding: 1.5rem !important;
+}
+
+/* All text inside the uploader */
+div[data-testid="stFileUploader"] label,
+div[data-testid="stFileUploader"] span,
+div[data-testid="stFileUploader"] p,
+div[data-testid="stFileUploader"] small,
+div[data-testid="stFileUploaderDropzoneInstructions"] span,
+div[data-testid="stFileUploaderDropzoneInstructions"] p {
     font-family: 'Space Mono', monospace !important;
-    font-size: 0.9rem !important;
-    font-weight: 500 !important;
     color: var(--neon-cyan) !important;
-    letter-spacing: 0.05em !important;
+    background: transparent !important;
 }
 
+/* File size / secondary hint text */
+div[data-testid="stFileUploader"] small,
+div[data-testid="stFileUploaderDropzoneInstructions"] small {
+    color: rgba(0, 240, 255, 0.6) !important;
+    font-size: 0.75rem !important;
+}
+
+/* Browse files button */
 div[data-testid="stFileUploader"] button {
     background: transparent !important;
     border: 1px solid var(--neon-pink) !important;
@@ -219,6 +243,32 @@ div[data-testid="stFileUploader"] button:hover {
     background: var(--neon-pink) !important;
     color: #050a14 !important;
     box-shadow: var(--glow-pink) !important;
+}
+
+/* Uploaded file badges */
+[data-testid="stFileUploaderFile"],
+[data-testid="stFileUploaderFile"] > div {
+    background: #0d1428 !important;
+    border-left: 3px solid var(--neon-cyan) !important;
+    border-radius: 0 !important;
+}
+
+[data-testid="stFileUploaderFileName"] {
+    color: var(--neon-cyan) !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.78rem !important;
+}
+
+[data-testid="stFileUploaderFileData"] {
+    color: rgba(0, 240, 255, 0.6) !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.7rem !important;
+}
+
+[data-testid="stFileUploaderDeleteBtn"] button {
+    color: var(--neon-pink) !important;
+    background: transparent !important;
+    border: none !important;
 }
 
 /* Convert button */
