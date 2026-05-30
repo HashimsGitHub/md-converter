@@ -196,7 +196,8 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── FILE UPLOADER - FULLY STREAMLIT DEFAULT, ZERO OVERRIDES ── */
+/* ── NO CUSTOM CSS FOR FILE UPLOADER - LEAVE IT DEFAULT ── */
+/* Streamlit's default file uploader already has readable text */
 
 /* ── Convert button ── */
 div[data-testid="stButton"] > button {
@@ -432,9 +433,10 @@ st.markdown('<div class="nd-label">Select input format</div>', unsafe_allow_html
 fmt = st.radio("format", ["PDF", "PPTX", "DOCX"], horizontal=True, label_visibility="collapsed")
 ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 
-# ── File uploader - NO CUSTOM CSS, PURE STREAMLIT DEFAULT ────────────────────
+# ── File uploader - NO CUSTOM CSS, using Streamlit default (readable) ─────────
+st.markdown('<div class="nd-label" style="margin-top:1.2rem">Upload files</div>', unsafe_allow_html=True)
 uploaded = st.file_uploader(
-    f"Upload {fmt}",
+    "Choose files",
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
