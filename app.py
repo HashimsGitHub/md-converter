@@ -240,8 +240,15 @@ section[data-testid="stFileUploaderDropzone"] small {
     display: none !important;
 }
 /* Override the button's own inner text to show clean label */
-div[data-testid="stFileUploader"] button span {
+/* Hide Streamlit's own button text ("Upload"), keep only our label */
+div[data-testid="stFileUploader"] button {
+    color: transparent !important;
     font-size: 0 !important;
+    position: relative;
+}
+div[data-testid="stFileUploader"] button * {
+    font-size: 0 !important;
+    color: transparent !important;
 }
 div[data-testid="stFileUploader"] button::after {
     content: "Browse files";
@@ -249,6 +256,10 @@ div[data-testid="stFileUploader"] button::after {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     letter-spacing: 0.5px;
+    color: var(--cyan);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 /* Browse button — neon outline pill */
@@ -256,17 +267,15 @@ div[data-testid="stFileUploader"] button {
     background: transparent !important;
     border: 1.2px solid var(--cyan) !important;
     border-radius: 40px !important;
-    color: var(--cyan) !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.75rem !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.5px !important;
-    padding: 6px 16px !important;
+    padding: 6px 32px !important;
     transition: all 0.2s;
+    min-width: 120px;
 }
 div[data-testid="stFileUploader"] button:hover {
     background: rgba(0,255,255,0.1) !important;
     box-shadow: 0 0 12px rgba(0,255,255,0.4) !important;
+}
+div[data-testid="stFileUploader"] button:hover::after {
     color: #fff !important;
 }
 
