@@ -206,7 +206,7 @@ div[data-testid="stFileUploader"] p {
 }
 
 div[data-testid="stFileUploader"] section button {
-    color: #000000 !important;
+    display: none !important;
 }
 
 div[data-testid="stFileUploader"] section {
