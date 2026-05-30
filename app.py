@@ -196,7 +196,7 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── FILE UPLOADER - COMPLETELY FIXED ── */
+/* ── FILE UPLOADER - DEFAULT STREAMLIT TEXT, NO DUPLICATES ── */
 /* Main container background */
 div[data-testid="stFileUploader"] {
     background: rgba(8, 18, 32, 0.6) !important;
@@ -223,33 +223,38 @@ div[data-testid="stFileUploaderDropzoneInstructions"] span {
     font-size: 0.9rem !important;
 }
 
+/* File size hint text (10MB) - cyan color to match button */
 div[data-testid="stFileUploaderDropzoneInstructions"] small {
     color: rgba(0, 255, 255, 0.6) !important;
     font-size: 0.75rem !important;
 }
 
-/* Browse button - clean, no duplicate text */
+/* Browse button - default Streamlit text, styled to match hint text color */
 div[data-testid="stFileUploaderDropzone"] button {
     background: transparent !important;
-    border: 1.5px solid var(--cyan) !important;
+    border: 1.5px solid rgba(0, 255, 255, 0.6) !important;
     border-radius: 40px !important;
     padding: 6px 24px !important;
     margin-top: 8px !important;
 }
 
+/* Button text - SAME COLOR as file size hint (rgba(0,255,255,0.6)) */
 div[data-testid="stFileUploaderDropzone"] button span {
-    color: var(--cyan) !important;
+    color: rgba(0, 255, 255, 0.6) !important;
     font-weight: 500 !important;
 }
 
 div[data-testid="stFileUploaderDropzone"] button:hover {
     background: rgba(0, 255, 255, 0.1) !important;
-    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3) !important;
+    border-color: rgba(0, 255, 255, 0.8) !important;
+}
+div[data-testid="stFileUploaderDropzone"] button:hover span {
+    color: rgba(0, 255, 255, 0.9) !important;
 }
 
-/* Hide any duplicate "Upload" text that appears elsewhere */
+/* Remove any duplicate pseudo-element text */
 div[data-testid="stFileUploader"] button::after,
-div[data-testid="stFileUploader"] > div > div:first-child > span:not(:empty) {
+div[data-testid="stFileUploader"] button::before {
     display: none !important;
 }
 
