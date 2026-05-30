@@ -302,16 +302,16 @@ div[data-testid="stFileUploader"] button:hover::after {
     padding: 0.4rem 0.8rem !important;
     overflow: hidden;
 }
-/* Filename text — neon green, Fira Code */
+/* Filename text — solid black, always readable */
 [data-testid="stFileUploaderFileName"],
 [data-testid="stFileUploaderFileName"] * {
-    color:        #5effbc !important;
+    color:        #000000 !important;
     font-family:  'Fira Code', monospace !important;
     font-size:    0.78rem !important;
-    font-weight:  500 !important;
+    font-weight:  700 !important;
     background:   transparent !important;
     background-color: transparent !important;
-    text-shadow:  0 0 8px rgba(94,255,188,0.5) !important;
+    text-shadow:  none !important;
 }
 /* File size text */
 [data-testid="stFileUploaderFileData"],
