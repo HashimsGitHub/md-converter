@@ -434,11 +434,11 @@ ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 
 # ── File uploader - NO CUSTOM CSS, PURE STREAMLIT DEFAULT ────────────────────
 uploaded = st.file_uploader(
-    f"Drop {fmt} files here or click to browse — multiple files supported, 10MB max per file",
+    f"Upload {fmt}",
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
-    label_visibility="hidden",
+    label_visibility="collapsed",
 )
 
 st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
