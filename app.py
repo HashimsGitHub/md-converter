@@ -24,12 +24,13 @@ st.markdown("""
     --neon-yellow:    #f5e642;
     --dark-bg:        #030612;
     --panel-bg:       #0a1022;
-    --panel-border:   #142c4a;
-    --text-main:      #c8d8f0;
-    --text-dim:       #3c5a7a;
+    --panel-border:   #1e3a5f;
+    --text-main:      #e8f4ff;
+    --text-dim:       #00ffe7;
     --glow-cyan:      0 0 6px #00ffe7, 0 0 15px rgba(0,255,231,0.6);
     --glow-pink:      0 0 6px #ff2d78, 0 0 15px rgba(255,45,120,0.6);
     --glow-cyan-soft: 0 0 4px #00ffe7, 0 0 8px rgba(0,255,231,0.4);
+    --glow-yellow:    0 0 6px #f5e642, 0 0 12px rgba(245,230,66,0.5);
 }
 
 /* ── Force black bg regardless of browser/OS theme ── */
@@ -42,7 +43,7 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"],
     font-family: 'Rajdhani', sans-serif !important;
     background: #030612 !important;
     background-color: #030612 !important;
-    color: var(--text-main) !important;
+    color: #e8f4ff !important;
 }
 /* Sidebar & all wrappers */
 [data-testid="stSidebar"],
@@ -113,10 +114,11 @@ body, [data-testid="stAppViewContainer"], [data-testid="stApp"],
 .cyber-sub {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.7rem;
-    color: var(--text-dim);
+    color: var(--neon-cyan);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     margin-top: 0.6rem;
+    text-shadow: var(--glow-cyan-soft);
 }
 .corner-tl, .corner-tr, .corner-bl, .corner-br {
     position: absolute; width: 18px; height: 18px;
@@ -165,7 +167,7 @@ div[data-testid="stRadio"] > div > label {
     font-size: 0.78rem !important;
     font-weight: 700 !important;
     letter-spacing: 0.1em !important;
-    color: var(--text-dim) !important;
+    color: #a0c8ff !important;
     cursor: pointer;
     transition: all 0.2s;
     text-transform: uppercase;
@@ -203,8 +205,9 @@ div[data-testid="stFileUploader"] section {
 div[data-testid="stFileUploader"] label {
     font-family: 'Share Tech Mono', monospace !important;
     font-size: 0.85rem !important;
-    color: var(--text-dim) !important;
+    color: var(--neon-cyan) !important;
     letter-spacing: 0.1em !important;
+    text-shadow: var(--glow-cyan-soft) !important;
 }
 div[data-testid="stFileUploader"] button {
     background: transparent !important;
@@ -315,9 +318,10 @@ div[data-testid="stDownloadButton"] > button:hover {
 .stat-lbl {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.6rem;
-    color: var(--text-dim);
+    color: var(--neon-yellow);
     letter-spacing: 0.15em;
     text-transform: uppercase;
+    text-shadow: var(--glow-yellow);
 }
 
 /* ── Result cards ── */
@@ -343,8 +347,9 @@ div[data-testid="stDownloadButton"] > button:hover {
 .result-meta {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.68rem;
-    color: var(--text-dim);
+    color: var(--neon-yellow);
     white-space: nowrap;
+    text-shadow: var(--glow-yellow);
 }
 .result-err {
     font-family: 'Share Tech Mono', monospace;
@@ -373,15 +378,34 @@ div[data-testid="stDownloadButton"] > button:hover {
 .ticker {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.65rem;
-    color: var(--text-dim);
+    color: var(--neon-cyan);
+    text-shadow: var(--glow-cyan-soft);
     border-top: 1px solid var(--panel-border);
     padding-top: 1rem;
     margin-top: 2rem;
     text-align: center;
 }
 
-/* ── Status text override ── */
-div[data-testid="stStatusWidget"] { display: none !important; }
+/* ── Progress bar text ── */
+div[data-testid="stProgressBar"] p,
+div[data-testid="stProgressBar"] span,
+div[data-testid="stProgressBar"] + div p {
+    color: var(--neon-cyan) !important;
+    font-family: 'Share Tech Mono', monospace !important;
+    font-size: 0.75rem !important;
+    text-shadow: var(--glow-cyan-soft) !important;
+}
+/* All stText / stMarkdown general text */
+p, span, li, div {
+    color: inherit;
+}
+/* Streamlit's own paragraph elements */
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] span {
+    color: #e8f4ff !important;
+    font-size: 1rem;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -513,3 +537,4 @@ st.markdown("""
   OUTPUT FORMAT: MARKDOWN (.MD) &nbsp;·&nbsp; SYSTEM ONLINE
 </div>
 """, unsafe_allow_html=True)
+
