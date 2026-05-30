@@ -197,9 +197,20 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
 /* ── FILE UPLOADER - FULLY STREAMLIT DEFAULT, ZERO OVERRIDES ── */
+/* Only fix: hide the duplicate span text Streamlit renders outside the button */
+div[data-testid="stFileUploaderDropzone"] button span {
+    visibility: hidden !important;
+    font-size: 0 !important;
+}
+div[data-testid="stFileUploaderDropzone"] button::after {
+    content: "Browse files";
+    visibility: visible !important;
+    font-size: 0.8rem;
+    color: inherit;
+}
 
-/* ── Convert button — scoped to main action button only ── */
-div[data-testid="stMain"] div[data-testid="stButton"] > button {
+/* ── Convert button ── */
+div[data-testid="stButton"] > button {
     width: 100%;
     background: var(--btn-primary) !important;
     border: none !important;
@@ -214,11 +225,11 @@ div[data-testid="stMain"] div[data-testid="stButton"] > button {
     transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
 }
-div[data-testid="stMain"] div[data-testid="stButton"] > button:hover {
+div[data-testid="stButton"] > button:hover {
     transform: scale(1.02);
     box-shadow: 0 0 20px var(--cyan) !important;
 }
-div[data-testid="stMain"] div[data-testid="stButton"] > button:active {
+div[data-testid="stButton"] > button:active {
     transform: scale(0.99);
 }
 
