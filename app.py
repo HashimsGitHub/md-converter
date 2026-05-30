@@ -247,10 +247,16 @@ div[data-testid="stFileUploaderDropzone"] button:hover {
     box-shadow: 0 0 12px rgba(0, 255, 255, 0.3) !important;
 }
 
-/* Hide any duplicate "Upload" text that appears elsewhere */
-div[data-testid="stFileUploader"] button::after,
-div[data-testid="stFileUploader"] > div > div:first-child > span:not(:empty) {
-    display: none !important;
+/* Make the stray "Upload" text that Streamlit renders outside the button
+   invisible by matching it to the dropzone background — effectively hidden */
+div[data-testid="stFileUploaderDropzoneInstructions"] > div > span,
+div[data-testid="stFileUploaderDropzone"] > div > span,
+div[data-testid="stFileUploaderDropzone"] span:not([data-testid]) {
+    color: rgba(8, 18, 40, 0) !important;
+    font-size: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    display: inline-block !important;
 }
 
 /* ── UPLOADED FILE CARDS - COMPLETELY READABLE ── */
