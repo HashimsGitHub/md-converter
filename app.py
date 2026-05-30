@@ -5,7 +5,7 @@ from pathlib import Path
 from markitdown import MarkItDown
 
 st.set_page_config(
-    page_title="MD//CONVERTER · NEBULA DRIVE",
+    page_title="MARKDOWNER | Markdown Converter",
     page_icon="☁️",
     layout="wide",
 )
@@ -231,9 +231,24 @@ div[data-testid="stFileUploaderDropzoneInstructions"] small {
     color: rgba(0,255,255,0.45) !important;
     font-size: 0.72rem !important;
 }
-/* Hide the duplicate label text Streamlit renders next to the button */
-div[data-testid="stFileUploaderDropzoneInstructions"] > div > span {
+/* Hide ALL duplicate/extra text Streamlit renders around the browse button */
+div[data-testid="stFileUploaderDropzoneInstructions"] > div > span,
+div[data-testid="stFileUploaderDropzoneInstructions"] small,
+div[data-testid="stFileUploader"] small,
+div[data-testid="stFileUploader"] section small,
+section[data-testid="stFileUploaderDropzone"] small {
     display: none !important;
+}
+/* Override the button's own inner text to show clean label */
+div[data-testid="stFileUploader"] button span {
+    font-size: 0 !important;
+}
+div[data-testid="stFileUploader"] button::after {
+    content: "Browse files";
+    font-size: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 /* Browse button — neon outline pill */
@@ -496,8 +511,8 @@ st.markdown("""
       <path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
       <path d="M12 12v5m0 0l-2-2m2 2l2-2"/>
     </svg>
-    NEBULA DRIVE
-    <span class="nd-badge">MD-CONVERTER</span>
+    MARKDOWNER
+    <span class="nd-badge">Markdown Converter</span>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -505,7 +520,7 @@ st.markdown("""
 # ── Hero / section header ─────────────────────────────────────────────────────
 st.markdown("""
 <div class="glass-panel">
-  <div class="nd-section-title">✦ MD // CONVERTER</div>
+  <div class="nd-section-title">✦ MARKDOWNER</div>
   <p class="nd-section-sub">AI-powered document conversion — PDF, PPTX and DOCX to Markdown using Microsoft MarkItDown</p>
 </div>
 """, unsafe_allow_html=True)
@@ -652,6 +667,6 @@ if convert_btn:
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="nd-footer">
-  <p>NEBULA DRIVE · MD//CONVERTER · POWERED BY MICROSOFT MARKITDOWN · PDF · DOCX · PPTX</p>
+  <p>MARKDOWNER · MARKDOWN CONVERTER · POWERED BY MICROSOFT MARKITDOWN · PDF · DOCX · PPTX</p>
 </div>
 """, unsafe_allow_html=True)
