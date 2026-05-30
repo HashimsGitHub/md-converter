@@ -448,6 +448,7 @@ uploaded = st.file_uploader(
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
+    label_visibility="hidden",
 )
 
 st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
