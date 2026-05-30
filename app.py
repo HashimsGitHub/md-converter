@@ -231,6 +231,11 @@ div[data-testid="stFileUploaderDropzoneInstructions"] small {
     color: rgba(0,255,255,0.45) !important;
     font-size: 0.72rem !important;
 }
+/* Hide the duplicate label text Streamlit renders next to the button */
+div[data-testid="stFileUploaderDropzoneInstructions"] > div > span {
+    display: none !important;
+}
+
 /* Browse button — neon outline pill */
 div[data-testid="stFileUploader"] button {
     background: transparent !important;
@@ -539,11 +544,17 @@ if convert_btn:
         progress = st.progress(0, text="Initializing…")
         total = len(uploaded)
 
+        MAX_BYTES = 10 * 1024 * 1024  # 10 MB
+
         for i, f in enumerate(uploaded):
             stem = Path(f.name).stem
             progress.progress(i / total, text=f"Converting {i+1} of {total} — {f.name}")
             try:
                 raw = f.read()
+                if len(raw) > MAX_BYTES:
+                    size_mb = len(raw) / 1024 / 1024
+                    results.append((stem, None, f"File too large ({size_mb:.1f} MB) — 10 MB maximum per file."))
+                    continue
                 result = md_tool.convert_stream(
                     io.BytesIO(raw),
                     file_extension=Path(f.name).suffix.lower(),
