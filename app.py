@@ -4,557 +4,486 @@ import zipfile
 from pathlib import Path
 from markitdown import MarkItDown
 
-# ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="MD//CONVERTER",
     page_icon="⚡",
     layout="wide",
 )
 
-# ── PROFESSIONAL NEON CYBERPUNK CSS (High Contrast, Readable) ─────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=Space+Mono:wght@400;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
 
-* {
-    box-sizing: border-box;
-}
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --neon-cyan: #00f0ff;
-    --neon-pink: #ff007f;
-    --neon-purple: #b000ff;
-    --neon-yellow: #ffe600;
-    --deep-blue: #050a14;
-    --deep-blue-card: #0a0f1e;
-    --panel-glow: rgba(0, 240, 255, 0.15);
-    --text-bright: #ffffff;
-    --text-dim: #a0b8d4;
-    --border-glow: 0 0 10px rgba(0, 240, 255, 0.3);
-    --card-border: 1px solid rgba(0, 240, 255, 0.2);
-    --glow-cyan: 0 0 8px #00f0ff, 0 0 20px rgba(0, 240, 255, 0.5);
-    --glow-pink: 0 0 8px #ff007f, 0 0 20px rgba(255, 0, 127, 0.5);
-    --glow-purple: 0 0 8px #b000ff, 0 0 20px rgba(176, 0, 255, 0.5);
+    --bg:           #000000;
+    --surface:      #0d0d0d;
+    --surface-2:    #141414;
+    --surface-3:    #1a1a1a;
+    --border:       rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.18);
+    --text:         #ffffff;
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-tertiary:  rgba(255,255,255,0.35);
+    --green:        #238636;
+    --green-hover:  #2ea043;
+    --green-light:  #3fb950;
+    --red:          #f85149;
+    --yellow:       #e3b341;
+    --blue:         #58a6ff;
+    --purple:       #bc8cff;
 }
 
-/* Dark deep blue background - ensures no white areas */
-html, body, .stApp, .stApp > header, .stApp > div, .main {
-    background: #050a14 !important;
-    background-color: #050a14 !important;
+/* ── Force black everywhere ── */
+html, body,
+.stApp, .stApp > header, .stApp > div,
+.main, section.main,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stBottom"],
+[data-testid="stSidebar"],
+[class*="css"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    color: var(--text) !important;
 }
 
-[data-testid="stAppViewContainer"] {
-    background: #050a14 !important;
-    background-image: radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.03) 0%, #050a14 80%) !important;
+#MainMenu, footer, header { visibility: hidden; }
+
+.block-container {
+    max-width: 860px !important;
+    margin: 0 auto !important;
+    padding: 3rem 2rem 4rem !important;
 }
 
-[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"] {
-    background: #050a14 !important;
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6, p, span, div, label,
+.stMarkdown, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    color: var(--text) !important;
 }
 
-/* Hide default Streamlit elements */
-#MainMenu, footer, header {
-    visibility: hidden;
+/* ── Header ── */
+.nd-header {
+    text-align: center;
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
 }
 
-/* Font overrides for readability */
-h1, h2, h3, h4, h5, h6, p, span, div, label, .stMarkdown {
-    color: var(--text-bright) !important;
-    font-family: 'Inter', sans-serif !important;
+.nd-wordmark {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--text-secondary) !important;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
-/* Monospace for code-like elements */
-.code-font, .stDownloadButton button, .stButton button, .stFileUploader label {
+.nd-wordmark::before, .nd-wordmark::after {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--border-hover);
+}
+
+.nd-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #ffffff !important;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+}
+
+.nd-title .slash {
+    color: var(--text-tertiary) !important;
+    font-weight: 300;
+}
+
+.nd-sub {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-secondary) !important;
+    letter-spacing: 0.01em;
+}
+
+/* ── Section label ── */
+.nd-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary) !important;
+    margin-bottom: 0.75rem;
     font-family: 'Space Mono', monospace !important;
 }
 
-/* Title styling */
-.cyber-header {
-    text-align: center;
-    padding: 2rem 0 1rem;
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.cyber-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: none;
-    margin: 0;
-    line-height: 1.2;
-}
-
-.cyber-title span {
-    background: linear-gradient(135deg, var(--neon-pink), var(--neon-yellow));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.cyber-sub {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--neon-cyan);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-top: 0.5rem;
-    opacity: 0.9;
-}
-
-/* Corner accents */
-.corner-tl, .corner-tr, .corner-bl, .corner-br {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-color: var(--neon-cyan);
-    border-style: solid;
-    opacity: 0.8;
-}
-
-.corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
-.corner-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
-.corner-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
-.corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
-
-/* Neon divider */
-.cyber-divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), var(--neon-purple), transparent);
-    margin: 1rem 0 2rem;
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-}
-
-/* Format label */
-.format-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    color: var(--neon-cyan);
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-    border-left: 4px solid var(--neon-pink);
-    padding-left: 1rem;
-}
-
-/* Radio buttons - high contrast */
+/* ── Format radio ── */
+div[data-testid="stRadio"] label { display: none !important; }
 div[data-testid="stRadio"] > div {
     display: flex !important;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
-
 div[data-testid="stRadio"] > div > label {
-    background: rgba(10, 15, 30, 0.8) !important;
-    border: 1px solid rgba(0, 240, 255, 0.3) !important;
-    border-radius: 0px !important;
-    padding: 0.7rem 1.8rem !important;
-    font-family: 'Orbitron', monospace !important;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.1em !important;
-    color: #c0d4f0 !important;
+    display: flex !important;
+    align-items: center;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+    padding: 0.55rem 1.4rem !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    color: var(--text-secondary) !important;
     cursor: pointer;
-    transition: all 0.25s ease;
-    backdrop-filter: blur(4px);
+    transition: all 0.15s ease;
 }
-
 div[data-testid="stRadio"] > div > label:hover {
-    border-color: var(--neon-cyan) !important;
-    color: var(--neon-cyan) !important;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.2) !important;
+    background: var(--surface-2) !important;
+    border-color: var(--border-hover) !important;
+    color: var(--text) !important;
 }
-
-div[data-testid="stRadio"] > div > label[data-baseweb="radio"]:has(input:checked) {
-    border-color: var(--neon-cyan) !important;
-    background: rgba(0, 240, 255, 0.1) !important;
-    color: var(--neon-cyan) !important;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3) !important;
+div[data-testid="stRadio"] > div > label:has(input:checked) {
+    background: var(--green) !important;
+    border-color: var(--green) !important;
+    color: #ffffff !important;
 }
+div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* File uploader — force dark on every layer Streamlit renders */
+/* ── File uploader — nuke every layer ── */
 div[data-testid="stFileUploader"],
 div[data-testid="stFileUploader"] > div,
 div[data-testid="stFileUploader"] section,
 div[data-testid="stFileUploader"] section > div,
 div[data-testid="stFileUploaderDropzone"],
-div[data-testid="stFileUploaderDropzoneInstructions"] {
-    background: #0a0f1e !important;
-    background-color: #0a0f1e !important;
+div[data-testid="stFileUploaderDropzoneInstructions"],
+div[data-testid="stFileUploaderDropzoneInstructions"] > div {
+    background: var(--surface) !important;
+    background-color: var(--surface) !important;
 }
-
 div[data-testid="stFileUploader"] {
-    border: 2px dashed rgba(0, 240, 255, 0.5) !important;
-    border-radius: 4px !important;
-    transition: all 0.3s ease;
+    border: 1px dashed rgba(255,255,255,0.2) !important;
+    border-radius: 8px !important;
+    transition: border-color 0.15s, background 0.15s;
 }
-
 div[data-testid="stFileUploader"]:hover {
-    border-color: var(--neon-cyan) !important;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2) !important;
+    border-color: rgba(255,255,255,0.4) !important;
+    background: var(--surface-2) !important;
 }
-
-/* The drag-and-drop inner zone */
-div[data-testid="stFileUploaderDropzone"] {
-    border: none !important;
-    padding: 1.5rem !important;
-}
-
-/* All text inside the uploader */
 div[data-testid="stFileUploader"] label,
 div[data-testid="stFileUploader"] span,
 div[data-testid="stFileUploader"] p,
-div[data-testid="stFileUploader"] small,
 div[data-testid="stFileUploaderDropzoneInstructions"] span,
 div[data-testid="stFileUploaderDropzoneInstructions"] p {
-    font-family: 'Space Mono', monospace !important;
-    color: var(--neon-cyan) !important;
+    font-family: 'Inter', sans-serif !important;
+    color: rgba(255,255,255,0.6) !important;
     background: transparent !important;
 }
-
-/* File size / secondary hint text */
 div[data-testid="stFileUploader"] small,
 div[data-testid="stFileUploaderDropzoneInstructions"] small {
-    color: rgba(0, 240, 255, 0.6) !important;
-    font-size: 0.75rem !important;
+    color: rgba(255,255,255,0.3) !important;
+    font-size: 0.72rem !important;
 }
-
-/* Browse files button */
 div[data-testid="stFileUploader"] button {
-    background: transparent !important;
-    border: 1px solid var(--neon-pink) !important;
-    border-radius: 2px !important;
-    color: var(--neon-pink) !important;
-    font-family: 'Space Mono', monospace !important;
-    font-size: 0.7rem !important;
+    background: var(--green) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
-    letter-spacing: 0.1em !important;
-    transition: all 0.2s;
+    padding: 0.45rem 1.1rem !important;
+    transition: background 0.15s;
+    cursor: pointer;
 }
-
 div[data-testid="stFileUploader"] button:hover {
-    background: var(--neon-pink) !important;
-    color: #050a14 !important;
-    box-shadow: var(--glow-pink) !important;
+    background: var(--green-hover) !important;
 }
 
-/* Uploaded file badges */
+/* ── Uploaded file badges ── */
 [data-testid="stFileUploaderFile"],
 [data-testid="stFileUploaderFile"] > div {
-    background: #0d1428 !important;
-    border-left: 3px solid var(--neon-cyan) !important;
-    border-radius: 0 !important;
+    background: var(--surface-2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
 }
-
 [data-testid="stFileUploaderFileName"] {
-    color: var(--neon-cyan) !important;
+    color: var(--text) !important;
     font-family: 'Space Mono', monospace !important;
-    font-size: 0.78rem !important;
+    font-size: 0.75rem !important;
 }
-
 [data-testid="stFileUploaderFileData"] {
-    color: rgba(0, 240, 255, 0.6) !important;
-    font-family: 'Space Mono', monospace !important;
+    color: var(--text-secondary) !important;
     font-size: 0.7rem !important;
 }
-
 [data-testid="stFileUploaderDeleteBtn"] button {
-    color: var(--neon-pink) !important;
+    color: var(--text-secondary) !important;
     background: transparent !important;
     border: none !important;
 }
+[data-testid="stFileUploaderDeleteBtn"] button:hover {
+    color: var(--red) !important;
+}
 
-/* Convert button */
+/* ── Convert button ── */
 div[data-testid="stButton"] > button {
     width: 100%;
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(176, 0, 255, 0.15)) !important;
-    border: 2px solid var(--neon-cyan) !important;
-    color: var(--neon-cyan) !important;
-    font-family: 'Orbitron', monospace !important;
+    background: var(--green) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
     font-size: 0.9rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.25em !important;
-    padding: 1rem !important;
-    border-radius: 4px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    padding: 0.75rem 1.5rem !important;
+    transition: background 0.15s, transform 0.1s;
     cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
-    margin: 0.5rem 0;
-}
-
-div[data-testid="stButton"] > button:hover {
-    background: var(--neon-cyan) !important;
-    color: #050a14 !important;
-    box-shadow: var(--glow-cyan) !important;
-    transform: translateY(-2px);
-}
-
-/* Progress bar */
-div[data-testid="stProgressBar"] > div {
-    background: rgba(10, 15, 30, 0.8) !important;
-    border-radius: 2px !important;
-    border: 1px solid rgba(0, 240, 255, 0.3) !important;
-    height: 8px !important;
-}
-
-div[data-testid="stProgressBar"] > div > div {
-    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)) !important;
-    border-radius: 2px !important;
-    box-shadow: 0 0 10px var(--neon-cyan) !important;
-}
-
-/* Progress text */
-div[data-testid="stProgressBar"] + div p {
-    color: var(--neon-cyan) !important;
-    font-family: 'Space Mono', monospace !important;
-    font-size: 0.8rem !important;
-    font-weight: 500 !important;
-}
-
-/* Stats strip */
-.stats-strip {
     display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    background: rgba(10, 15, 30, 0.7);
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    backdrop-filter: blur(8px);
-    padding: 1rem 1.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+div[data-testid="stButton"] > button:hover {
+    background: var(--green-hover) !important;
+    transform: translateY(-1px);
+}
+div[data-testid="stButton"] > button:active {
+    transform: translateY(0);
+}
+
+/* ── Progress bar ── */
+div[data-testid="stProgressBar"] > div {
+    background: var(--surface-2) !important;
+    border-radius: 4px !important;
+    height: 4px !important;
+    border: none !important;
+}
+div[data-testid="stProgressBar"] > div > div {
+    background: var(--green-light) !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+/* Progress label text */
+[data-testid="stProgressBar"] ~ div p,
+[data-testid="stProgressBar"] + div p {
+    color: var(--text-secondary) !important;
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.75rem !important;
+}
+
+/* ── Stats strip ── */
+.nd-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
     margin: 1.5rem 0;
-    border-radius: 4px;
 }
-
-.stat-item {
+.nd-stat {
+    background: var(--surface);
+    padding: 1.2rem 1rem;
     text-align: center;
-    flex: 1;
-    min-width: 80px;
 }
-
-.stat-val {
-    font-family: 'Orbitron', monospace;
+.nd-stat-val {
+    font-family: 'Inter', sans-serif;
     font-size: 1.8rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-weight: 700;
+    color: #ffffff;
     display: block;
-    line-height: 1.2;
+    line-height: 1;
+    margin-bottom: 0.3rem;
 }
-
-.stat-lbl {
+.nd-stat-lbl {
     font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--neon-yellow);
-    letter-spacing: 0.15em;
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-top: 0.25rem;
-    display: block;
 }
 
-/* Result cards */
-.result-card {
-    background: rgba(10, 15, 30, 0.8);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-left: 4px solid var(--neon-cyan);
-    border-radius: 4px;
-    padding: 1rem 1.2rem;
-    margin: 0.5rem 0;
+/* ── Result cards ── */
+.nd-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    margin: 0.4rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    backdrop-filter: blur(4px);
-    transition: all 0.2s ease;
+    transition: border-color 0.15s;
 }
-
-.result-card:hover {
-    border-left-color: var(--neon-pink);
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
-}
-
-.result-card.error {
-    border-left-color: var(--neon-pink);
-}
-
-.result-filename {
+.nd-card:hover { border-color: var(--border-hover); }
+.nd-card.nd-error { border-left: 3px solid var(--red); }
+.nd-card.nd-ok   { border-left: 3px solid var(--green-light); }
+.nd-filename {
     font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--neon-cyan);
-    word-break: break-word;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: #ffffff;
 }
-
-.result-card.error .result-filename {
-    color: var(--neon-pink);
+.nd-card.nd-error .nd-filename { color: var(--red); }
+.nd-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
 }
-
-.result-meta {
+.nd-errmsg {
     font-family: 'Space Mono', monospace;
     font-size: 0.7rem;
-    color: var(--neon-yellow);
-    margin-top: 0.25rem;
+    color: var(--red);
+    margin-top: 0.2rem;
 }
 
-.result-err {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--neon-pink);
-    margin-top: 0.25rem;
-}
-
-/* Download buttons inside results */
+/* ── Download buttons ── */
 div[data-testid="stDownloadButton"] > button {
-    background: transparent !important;
-    border: 1px solid var(--neon-cyan) !important;
-    border-radius: 2px !important;
-    color: var(--neon-cyan) !important;
-    font-family: 'Space Mono', monospace !important;
-    font-size: 0.7rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.1em !important;
-    padding: 0.4rem 1rem !important;
-    transition: all 0.2s ease;
+    background: var(--surface-2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+    color: var(--text) !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    padding: 0.4rem 0.9rem !important;
+    transition: all 0.15s;
     white-space: nowrap;
 }
-
 div[data-testid="stDownloadButton"] > button:hover {
-    background: var(--neon-cyan) !important;
-    color: #050a14 !important;
-    box-shadow: var(--glow-cyan) !important;
+    background: var(--surface-3) !important;
+    border-color: var(--border-hover) !important;
+    color: #ffffff !important;
 }
 
-/* Download all zip button wrapper */
-.dl-all-wrap {
-    margin-top: 1rem;
-}
-
+/* ── Download all ZIP ── */
 .dl-all-wrap div[data-testid="stDownloadButton"] > button {
-    background: linear-gradient(135deg, rgba(255, 0, 127, 0.15), rgba(0, 240, 255, 0.15)) !important;
-    border: 2px solid var(--neon-pink) !important;
-    color: var(--neon-pink) !important;
+    background: var(--green) !important;
+    border: none !important;
+    color: #ffffff !important;
     width: 100%;
-    padding: 0.8rem !important;
-    font-size: 0.8rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.2em !important;
+    padding: 0.7rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
 }
-
 .dl-all-wrap div[data-testid="stDownloadButton"] > button:hover {
-    background: var(--neon-pink) !important;
-    color: #050a14 !important;
-    box-shadow: var(--glow-pink) !important;
+    background: var(--green-hover) !important;
 }
 
-/* Footer ticker */
-.ticker {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-dim);
+/* ── Divider ── */
+.nd-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+}
+
+/* ── Footer ── */
+.nd-footer {
     text-align: center;
-    border-top: 1px solid rgba(0, 240, 255, 0.3);
-    padding-top: 1.5rem;
-    margin-top: 2rem;
-    letter-spacing: 0.1em;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+}
+.nd-footer p {
+    font-family: 'Space Mono', monospace !important;
+    font-size: 0.65rem !important;
+    color: var(--text-tertiary) !important;
+    letter-spacing: 0.08em;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ── Text selection ── */
+::selection { background: rgba(46,160,67,0.35); color: #fff; }
+
+/* ── stMarkdown text ── */
+.stMarkdown p, .stMarkdown li, .stMarkdown span {
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
-::-webkit-scrollbar-track {
-    background: #0a0f1e;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--neon-cyan);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--neon-pink);
-}
-
-/* Text selection */
-::selection {
-    background: rgba(0, 240, 255, 0.3);
-    color: white;
-}
-
-/* Typography improvements for readability */
-.stMarkdown p, .stMarkdown li {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #e0ecff !important;
-}
-
-/* Custom container width */
-.block-container {
-    max-width: 1200px !important;
-    padding: 2rem 2rem !important;
-}
+/* ── Status widget hide ── */
+div[data-testid="stStatusWidget"] { display: none !important; }
 </style>
 """, unsafe_allow_html=True)
 
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("""
-<div class="cyber-header">
-  <div class="corner-tl"></div><div class="corner-tr"></div>
-  <div class="corner-bl"></div><div class="corner-br"></div>
-  <p class="cyber-title">MD<span>//</span>CONVERTER</p>
-  <p class="cyber-sub">⚡ MICROSOFT MARKITDOWN • NEURAL DOCUMENT PROCESSOR ⚡</p>
+<div class="nd-header">
+  <div class="nd-wordmark">NEBULA DRIVE · NEURAL DOCUMENT PROCESSOR</div>
+  <div class="nd-title">MD<span class="slash"> // </span>CONVERTER</div>
+  <div class="nd-sub">Convert PDF, PPTX and DOCX files to Markdown — powered by Microsoft MarkItDown</div>
 </div>
-<div class="cyber-divider"></div>
 """, unsafe_allow_html=True)
 
 # ── Format selector ───────────────────────────────────────────────────────────
-st.markdown('<p class="format-label">▸ SELECT INPUT FORMAT</p>', unsafe_allow_html=True)
+st.markdown('<div class="nd-label">Select input format</div>', unsafe_allow_html=True)
 
 fmt = st.radio("format", ["PDF", "PPTX", "DOCX"], horizontal=True, label_visibility="collapsed")
 
 ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 
-st.markdown("<br>", unsafe_allow_html=True)
-
 # ── File uploader ─────────────────────────────────────────────────────────────
+st.markdown('<div class="nd-label" style="margin-top:1.5rem">Upload files</div>', unsafe_allow_html=True)
+
 uploaded = st.file_uploader(
-    f"📁 DROP FILES OR CLICK TO UPLOAD • SUPPORTED: {ACCEPT_MAP[fmt][0]} • MULTIPLE ALLOWED",
+    f"Drop {fmt} files here or click to browse — multiple files supported",
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
 )
 
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<div style='height:1rem'></div>", unsafe_allow_html=True)
 
 # ── Convert button ────────────────────────────────────────────────────────────
-convert_btn = st.button("⚡ INITIATE CONVERSION", use_container_width=True)
+convert_btn = st.button("⚡  Convert to Markdown", use_container_width=True)
 
 if convert_btn:
     if not uploaded:
-        st.markdown(
-            '<div class="result-card error"><div class="result-filename">⚠ NO FILES DETECTED. UPLOAD AT LEAST ONE FILE TO PROCEED.</div></div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown("""
+        <div class="nd-card nd-error">
+          <div>
+            <div class="nd-filename">No files detected</div>
+            <div class="nd-errmsg">Upload at least one file to proceed.</div>
+          </div>
+        </div>""", unsafe_allow_html=True)
     else:
         md_tool = MarkItDown()
         results = []
 
-        progress = st.progress(0, text="Initializing conversion matrix...")
+        progress = st.progress(0, text="Initializing…")
         total = len(uploaded)
 
         for i, f in enumerate(uploaded):
             stem = Path(f.name).stem
-            progress.progress(i / total, text=f"[{i+1}/{total}] Converting: {f.name}")
+            progress.progress(i / total, text=f"Converting {i+1} of {total} — {f.name}")
             try:
                 raw = f.read()
                 result = md_tool.convert_stream(
@@ -565,58 +494,64 @@ if convert_btn:
             except Exception as e:
                 results.append((stem, None, str(e)))
 
-        progress.progress(1.0, text="Conversion complete.")
+        progress.progress(1.0, text="Done.")
 
         # ── Stats ──
-        ok = [r for r in results if r[1] is not None]
+        ok  = [r for r in results if r[1] is not None]
         err = [r for r in results if r[1] is None]
         total_kb = sum(len(r[1]) for r in ok) // 1024
 
-        st.markdown(
-            f"""
-            <div class="stats-strip">
-              <div class="stat-item"><span class="stat-val">{total}</span><span class="stat-lbl">FILES INPUT</span></div>
-              <div class="stat-item"><span class="stat-val">{len(ok)}</span><span class="stat-lbl">CONVERTED</span></div>
-              <div class="stat-item"><span class="stat-val">{len(err)}</span><span class="stat-lbl">ERRORS</span></div>
-              <div class="stat-item"><span class="stat-val">{total_kb} KB</span><span class="stat-lbl">MD OUTPUT</span></div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        ok_color  = "#3fb950" if len(ok) > 0 else "#ffffff"
+        err_color = "#f85149" if len(err) > 0 else "#ffffff"
 
-        # ── Per-file result cards ──
+        st.markdown(f"""
+        <div class="nd-stats">
+          <div class="nd-stat">
+            <span class="nd-stat-val">{total}</span>
+            <span class="nd-stat-lbl">Input</span>
+          </div>
+          <div class="nd-stat">
+            <span class="nd-stat-val" style="color:{ok_color}">{len(ok)}</span>
+            <span class="nd-stat-lbl">Converted</span>
+          </div>
+          <div class="nd-stat">
+            <span class="nd-stat-val" style="color:{err_color}">{len(err)}</span>
+            <span class="nd-stat-lbl">Errors</span>
+          </div>
+          <div class="nd-stat">
+            <span class="nd-stat-val">{total_kb}</span>
+            <span class="nd-stat-lbl">KB Output</span>
+          </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # ── Per-file cards ──
+        st.markdown('<div class="nd-label">Results</div>', unsafe_allow_html=True)
+
         for stem, md_bytes, error in results:
             if error:
-                st.markdown(
-                    f"""
-                    <div class="result-card error">
-                      <div>
-                        <div class="result-filename">✗ {stem}.md</div>
-                        <div class="result-err">{error[:120]}</div>
-                      </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                st.markdown(f"""
+                <div class="nd-card nd-error">
+                  <div>
+                    <div class="nd-filename">✗  {stem}.md</div>
+                    <div class="nd-errmsg">{error[:140]}</div>
+                  </div>
+                </div>""", unsafe_allow_html=True)
             else:
                 chars = len(md_bytes)
                 lines = md_bytes.count(b"\n")
-                col_info, col_dl = st.columns([4, 1])
+                col_info, col_dl = st.columns([5, 1])
                 with col_info:
-                    st.markdown(
-                        f"""
-                        <div class="result-card">
-                          <div>
-                            <div class="result-filename">✓ {stem}.md</div>
-                            <div class="result-meta">{chars:,} chars • {lines:,} lines</div>
-                          </div>
-                        </div>
-                        """,
-                        unsafe_allow_html=True,
-                    )
+                    st.markdown(f"""
+                    <div class="nd-card nd-ok">
+                      <div>
+                        <div class="nd-filename">✓  {stem}.md</div>
+                        <div class="nd-meta">{chars:,} chars · {lines:,} lines</div>
+                      </div>
+                    </div>""", unsafe_allow_html=True)
                 with col_dl:
                     st.download_button(
-                        "↓ SAVE",
+                        "↓ Save",
                         data=md_bytes,
                         file_name=f"{stem}.md",
                         mime="text/markdown",
@@ -624,7 +559,7 @@ if convert_btn:
                         use_container_width=True,
                     )
 
-        # ── Download all ZIP ──
+        # ── Download all as ZIP ──
         if len(ok) > 1:
             zip_buf = io.BytesIO()
             with zipfile.ZipFile(zip_buf, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -632,7 +567,7 @@ if convert_btn:
                     zf.writestr(f"{stem}.md", md_bytes)
             st.markdown('<div class="dl-all-wrap">', unsafe_allow_html=True)
             st.download_button(
-                f"⚡ DOWNLOAD ALL {len(ok)} FILES AS .ZIP",
+                f"⬇  Download all {len(ok)} files as .zip",
                 data=zip_buf.getvalue(),
                 file_name="converted_markdown.zip",
                 mime="application/zip",
@@ -642,7 +577,7 @@ if convert_btn:
 
 # ── Footer ────────────────────────────────────────────────────────────────────
 st.markdown("""
-<div class="ticker">
-  POWERED BY MICROSOFT MARKITDOWN • PDF • DOCX • PPTX • OUTPUT FORMAT: MARKDOWN (.MD) • SYSTEM ONLINE
+<div class="nd-footer">
+  <p>POWERED BY MICROSOFT MARKITDOWN &nbsp;·&nbsp; PDF · DOCX · PPTX &nbsp;·&nbsp; OUTPUT: MARKDOWN (.MD)</p>
 </div>
 """, unsafe_allow_html=True)
