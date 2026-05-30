@@ -462,6 +462,27 @@ div[data-testid="stFileUploader"] span {
 }
 
 
+
+/* Hide Streamlit's default Upload button and keep only Browse for files */
+div[data-testid="stFileUploader"] button[kind="secondary"] {
+    color: #5effbc !important;
+    border-color: #5effbc !important;
+}
+
+div[data-testid="stFileUploader"] button[kind="secondary"]::after {
+    content: "Browse for Files";
+}
+
+div[data-testid="stFileUploader"] button[kind="secondary"] * {
+    color: #5effbc !important;
+}
+
+/* Hide helper text that can create duplicate upload wording */
+div[data-testid="stFileUploader"] small {
+    display: none !important;
+}
+
+
 /* ── Column alignment fix for result rows ── */
 [data-testid="stColumn"] { align-items: center !important; }
 </style>
