@@ -198,27 +198,33 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── Custom File Uploader Layout - Card style with right-aligned button ── */
-/* Hide default file uploader dropzone instructions and restructure */
+/* ── File uploader — match RESULTS card style exactly ── */
+/* Outer wrapper: transparent, no border */
+div[data-testid="stFileUploader"],
 div[data-testid="stFileUploader"] > div:first-child {
-    display: block !important;
-}
-
-/* Create a card container for each uploaded file */
-div[data-testid="stFileUploader"] {
     background: transparent !important;
     border: none !important;
     backdrop-filter: none !important;
 }
 
-/* Style each uploaded file as a card (similar to result cards) */
+/* The section Streamlit wraps files in — MUST be dark */
+div[data-testid="stFileUploader"] section,
+div[data-testid="stFileUploader"] section > div,
+div[data-testid="stFileUploader"] > div > div,
+div[data-testid="stFileUploader"] > div > div > div {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Each file card — identical to .nd-card.nd-ok */
 div[data-testid="stFileUploaderFile"] {
-    background: rgba(8, 18, 32, 0.7) !important;
+    background: rgba(8, 18, 32, 0.85) !important;
+    background-color: rgba(8, 18, 32, 0.85) !important;
     backdrop-filter: blur(8px) !important;
     border: 1px solid var(--glass-border) !important;
     border-left: 4px solid var(--success-c) !important;
     border-radius: 1.5rem !important;
-    padding: 1rem 1.3rem !important;
+    padding: 0.9rem 1.3rem !important;
     margin: 0.5rem 0 !important;
     display: flex !important;
     align-items: center !important;
@@ -231,38 +237,51 @@ div[data-testid="stFileUploaderFile"]:hover {
     box-shadow: 0 0 15px rgba(0,255,255,0.15) !important;
 }
 
-/* File info container (left side) */
-div[data-testid="stFileUploaderFile"] > div:first-child {
-    flex: 1 !important;
+/* Force dark on every child inside the file card */
+div[data-testid="stFileUploaderFile"] *,
+div[data-testid="stFileUploaderFile"] > div,
+div[data-testid="stFileUploaderFile"] > div > div,
+div[data-testid="stFileUploaderFile"] > div > div > div {
     background: transparent !important;
+    background-color: transparent !important;
 }
 
-/* Filename text - NEON GREEN like download results */
+/* Filename — neon green, Fira Code — same as ✓ result filename */
 div[data-testid="stFileUploaderFileName"],
-div[data-testid="stFileUploaderFile"] span:first-child {
+div[data-testid="stFileUploaderFileName"] *,
+div[data-testid="stFileUploaderFile"] span.st-emotion-cache-1rpn56o,
+div[data-testid="stFileUploaderFile"] > div:first-child span {
     color: var(--success-c) !important;
     font-family: 'Fira Code', monospace !important;
     font-size: 0.85rem !important;
     font-weight: 500 !important;
     background: transparent !important;
-    word-break: break-word !important;
+    word-break: break-all !important;
+    text-shadow: 0 0 6px rgba(94,255,188,0.3) !important;
 }
 
-/* File size and meta data */
+/* File size — cyan dim, same as nd-meta */
 div[data-testid="stFileUploaderFileData"],
-div[data-testid="stFileUploaderFile"] small,
-div[data-testid="stFileUploaderFile"] .stMarkdown small {
+div[data-testid="stFileUploaderFileData"] *,
+div[data-testid="stFileUploaderFile"] small {
     color: rgba(0,255,255,0.55) !important;
     font-family: 'Fira Code', monospace !important;
     font-size: 0.7rem !important;
     background: transparent !important;
-    display: inline-block !important;
 }
 
-/* Delete button container (right side) - style like Save button */
+/* File icon — neon green */
+div[data-testid="stFileUploaderFile"] svg {
+    color: var(--success-c) !important;
+    fill: var(--success-c) !important;
+    filter: drop-shadow(0 0 3px rgba(94,255,188,0.4)) !important;
+    flex-shrink: 0 !important;
+}
+
+/* Delete button — same neon outline pill as ↓ Save */
 div[data-testid="stFileUploaderDeleteBtn"] {
     margin-left: auto !important;
-    background: transparent !important;
+    flex-shrink: 0 !important;
 }
 div[data-testid="stFileUploaderDeleteBtn"] button {
     background: transparent !important;
@@ -272,29 +291,33 @@ div[data-testid="stFileUploaderDeleteBtn"] button {
     font-family: 'Inter', sans-serif !important;
     font-size: 0.75rem !important;
     font-weight: 500 !important;
-    padding: 6px 16px !important;
+    padding: 5px 18px !important;
     transition: all 0.2s !important;
     white-space: nowrap !important;
-    backdrop-filter: blur(4px) !important;
     cursor: pointer !important;
 }
 div[data-testid="stFileUploaderDeleteBtn"] button:hover {
-    background: rgba(0,255,255,0.1) !important;
-    box-shadow: 0 0 12px rgba(0,255,255,0.4) !important;
-    color: #fff !important;
-    border-color: var(--cyan) !important;
+    background: rgba(255,119,128,0.1) !important;
+    border-color: #ff7780 !important;
+    color: #ff7780 !important;
+    box-shadow: 0 0 10px rgba(255,119,128,0.3) !important;
 }
-
-/* File icon - neon green */
-div[data-testid="stFileUploaderFile"] svg {
-    color: var(--success-c) !important;
-    fill: var(--success-c) !important;
-    filter: drop-shadow(0 0 2px rgba(94,255,188,0.3)) !important;
+/* Hide default "×" text, replace with "Remove" */
+div[data-testid="stFileUploaderDeleteBtn"] button span {
+    font-size: 0 !important;
+    color: transparent !important;
+}
+div[data-testid="stFileUploaderDeleteBtn"] button::after {
+    content: "✕ Remove";
+    font-size: 0.72rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: inherit;
 }
 
 /* Progress bar inside upload card */
 div[data-testid="stFileUploaderFile"] [role="progressbar"] {
-    background: rgba(94, 255, 188, 0.15) !important;
+    background: rgba(94,255,188,0.15) !important;
     border-radius: 10px !important;
 }
 div[data-testid="stFileUploaderFile"] [role="progressbar"] > div {
