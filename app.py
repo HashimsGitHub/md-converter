@@ -206,7 +206,7 @@ div[data-testid="stFileUploader"] p {
 }
 
 div[data-testid="stFileUploader"] section button {
-    display: none !important;
+    color: #000000 !important;
 }
 
 div[data-testid="stFileUploader"] section {
@@ -216,13 +216,6 @@ div[data-testid="stFileUploader"] section {
 
 div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"] > div > span {
     display: none !important;
-}
-
-div[data-testid="stFileUploaderFileName"],
-div[data-testid="stFileUploaderFileData"],
-div[data-testid="stFileUploaderFile"] span,
-div[data-testid="stFileUploaderFile"] small {
-    color: #000000 !important;
 }
 
 div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"]::after {
@@ -432,6 +425,42 @@ div[data-testid="stDownloadButton"] > button:hover {
 
 /* ── Status widget hide ── */
 div[data-testid="stStatusWidget"] { display: none !important; }
+
+
+/* ── Custom File Uploader Styling ── */
+div[data-testid="stFileUploader"] section {
+    background: rgba(8, 18, 32, 0.85) !important;
+    border: 1.5px solid rgba(0,255,255,0.35) !important;
+    border-radius: 1.25rem !important;
+    padding: 1rem !important;
+}
+
+div[data-testid="stFileUploader"] button {
+    background: rgba(8,18,32,0.95) !important;
+    border: 1.5px solid #5effbc !important;
+    border-radius: 40px !important;
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
+    font-weight: 600 !important;
+    box-shadow: 0 0 12px rgba(94,255,188,0.25) !important;
+}
+
+div[data-testid="stFileUploader"] button:hover {
+    box-shadow: 0 0 18px rgba(94,255,188,0.45) !important;
+    border-color: #5effbc !important;
+}
+
+div[data-testid="stFileUploader"] button * {
+    color: #5effbc !important;
+}
+
+div[data-testid="stFileUploader"] small,
+div[data-testid="stFileUploader"] p,
+div[data-testid="stFileUploader"] span {
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
+}
+
 
 /* ── Column alignment fix for result rows ── */
 [data-testid="stColumn"] { align-items: center !important; }
