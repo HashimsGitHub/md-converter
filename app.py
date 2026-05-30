@@ -251,7 +251,7 @@ div[data-testid="stFileUploader"] button * {
     color: transparent !important;
 }
 div[data-testid="stFileUploader"] button::after {
-    content: "Browse files";
+    content: "Upload";
     font-size: 0.75rem;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
@@ -279,21 +279,31 @@ div[data-testid="stFileUploader"] button:hover::after {
     color: #fff !important;
 }
 
-/* ── Uploaded file badges ── */
+/* ── Uploaded file badges — force dark on every layer ── */
 [data-testid="stFileUploaderFile"],
-[data-testid="stFileUploaderFile"] > div {
-    background: var(--code-bg) !important;
-    border-left: 4px solid var(--cyan) !important;
-    border-radius: 1rem !important;
+[data-testid="stFileUploaderFile"] > div,
+[data-testid="stFileUploaderFile"] > div > div,
+[data-testid="stFileUploaderFile"] span,
+[data-testid="stFileUploaderFile"] p,
+[data-testid="stFileUploaderFile"] small {
+    background: #030812 !important;
+    background-color: #030812 !important;
+}
+[data-testid="stFileUploaderFile"] {
+    border-left: 3px solid var(--cyan) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.4rem 0.8rem !important;
 }
 [data-testid="stFileUploaderFileName"] {
-    color: var(--text) !important;
+    color: #eef5ff !important;
     font-family: 'Fira Code', monospace !important;
     font-size: 0.78rem !important;
+    background: transparent !important;
 }
 [data-testid="stFileUploaderFileData"] {
-    color: rgba(0,255,255,0.5) !important;
+    color: rgba(0,255,255,0.6) !important;
     font-size: 0.7rem !important;
+    background: transparent !important;
 }
 [data-testid="stFileUploaderDeleteBtn"] button {
     color: rgba(0,255,255,0.5) !important;
