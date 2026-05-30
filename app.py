@@ -197,17 +197,6 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
 /* ── FILE UPLOADER - FULLY STREAMLIT DEFAULT, ZERO OVERRIDES ── */
-/* Only fix: hide the duplicate span text Streamlit renders outside the button */
-div[data-testid="stFileUploaderDropzone"] button span {
-    visibility: hidden !important;
-    font-size: 0 !important;
-}
-div[data-testid="stFileUploaderDropzone"] button::after {
-    content: "Browse files";
-    visibility: visible !important;
-    font-size: 0.8rem;
-    color: inherit;
-}
 
 /* ── Convert button ── */
 div[data-testid="stButton"] > button {
@@ -444,7 +433,6 @@ fmt = st.radio("format", ["PDF", "PPTX", "DOCX"], horizontal=True, label_visibil
 ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 
 # ── File uploader - NO CUSTOM CSS, PURE STREAMLIT DEFAULT ────────────────────
-st.markdown('<div class="nd-label" style="margin-top:1.2rem">Upload files</div>', unsafe_allow_html=True)
 uploaded = st.file_uploader(
     f"Drop {fmt} files here or click to browse — multiple files supported, 10MB max per file",
     type=ACCEPT_MAP[fmt],
