@@ -17,13 +17,13 @@
 
 **[https://markdowner.streamlit.app/](https://markdowner.streamlit.app/)**
 
-<img width="1442" height="837" alt="image" src="https://github.com/user-attachments/assets/8b7c0cf7-fb5f-41a1-9868-5c1555cb7987" />
+<img width="1730" height="722" alt="image" src="https://github.com/user-attachments/assets/0a92a894-d2bb-4a4e-8384-ad80bd289a44" />
 
 ---
 
 ## 📖 Overview
 
-**Markdowner** is a sleek, browser-based document converter that transforms **PDF**, **PPTX**, and **DOCX** files into clean **Markdown** (`.md`) using Microsoft's open-source [MarkItDown](https://github.com/microsoft/markitdown) library. Built with a futuristic glassmorphism UI inspired by the Nebula Drive design system.
+**Markdowner** is a sleek, browser-based document converter that transforms **PDF**, **PPTX**, and **DOCX** files into clean **Markdown** (`.md`) using Microsoft's open-source [MarkItDown](https://github.com/microsoft/markitdown) library. 
 
 Upload multiple files at once, convert them in batch, and download individually or as a single `.zip` archive — no sign-in required.
 
@@ -37,7 +37,6 @@ Upload multiple files at once, convert them in batch, and download individually 
 | 📦 **Batch processing** | Upload and convert multiple files simultaneously |
 | ⬇️ **Flexible download** | Save files individually or all as a `.zip` |
 | 🛡️ **10 MB file limit** | Per-file size cap to keep conversions fast |
-| 🎨 **Nebula Drive UI** | Glassmorphism dark theme with neon cyan accents |
 | ⚡ **Zero config** | No login, no API key — just upload and convert |
 
 ---
@@ -47,31 +46,6 @@ Upload multiple files at once, convert them in batch, and download individually 
 ### Prerequisites
 
 - Python 3.10 or higher
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/HashimsGitHub/md-converter.git
-cd md-converter
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the app
-streamlit run app.py
-```
-
-The app will open at `http://localhost:8501`
-
----
-
-## 📦 Dependencies
-
-```txt
-streamlit
-markitdown[pdf,docx,pptx]
-```
 
 ---
 
@@ -119,7 +93,7 @@ md-converter/
 
 | Layer | Technology |
 |---|---|
-| Frontend | Streamlit + Custom CSS (Glassmorphism) |
+| Frontend | Streamlit + Custom CSS  |
 | Conversion Engine | Microsoft MarkItDown |
 | Fonts | Inter · Fira Code |
 | Hosting | Streamlit Community Cloud |
