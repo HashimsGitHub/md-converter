@@ -485,6 +485,56 @@ div[data-testid="stFileUploader"] small {
 
 /* ── Column alignment fix for result rows ── */
 [data-testid="stColumn"] { align-items: center !important; }
+
+/* ===== FINAL FILE UPLOADER OVERRIDE ===== */
+
+/* Hide helper/instruction text */
+div[data-testid="stFileUploader"] small,
+div[data-testid="stFileUploader"] p {
+    display: none !important;
+}
+
+/* Upload area */
+div[data-testid="stFileUploader"] section {
+    background: rgba(8,18,32,0.85) !important;
+    border: 1px solid rgba(0,255,255,0.35) !important;
+    border-radius: 24px !important;
+}
+
+/* Hide ALL original button text */
+div[data-testid="stFileUploader"] button * {
+    visibility: hidden !important;
+}
+
+/* Custom neon button */
+div[data-testid="stFileUploader"] button {
+    position: relative !important;
+    min-width: 280px !important;
+    min-height: 48px !important;
+    background: rgba(8,18,32,0.95) !important;
+    border: 1.5px solid #5effbc !important;
+    border-radius: 40px !important;
+    box-shadow: 0 0 15px rgba(94,255,188,0.25) !important;
+}
+
+/* Single visible label */
+div[data-testid="stFileUploader"] button::before {
+    content: "Browse for Files";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+}
+
+div[data-testid="stFileUploader"] button:hover {
+    box-shadow: 0 0 22px rgba(94,255,188,0.5) !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
