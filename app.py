@@ -196,7 +196,16 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── FILE UPLOADER - 100% STREAMLIT DEFAULT, NO OVERRIDES ── */
+/* ── FILE UPLOADER - NO CUSTOM CSS AT ALL, FULLY DEFAULT ── */
+/* Remove ALL custom styling for file uploader - use Streamlit defaults */
+div[data-testid="stFileUploader"],
+div[data-testid="stFileUploaderDropzone"],
+div[data-testid="stFileUploaderFile"],
+div[data-testid="stFileUploaderFileName"],
+div[data-testid="stFileUploaderFileData"],
+div[data-testid="stFileUploaderDeleteBtn"] button {
+    all: revert !important;
+}
 
 /* ── Convert button ── */
 div[data-testid="stButton"] > button {
@@ -432,9 +441,10 @@ st.markdown('<div class="nd-label">Select input format</div>', unsafe_allow_html
 fmt = st.radio("format", ["PDF", "PPTX", "DOCX"], horizontal=True, label_visibility="collapsed")
 ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 
-# ── File uploader ─────────────────────────────────────────────────────────────
+# ── File uploader - NO CUSTOM CSS, PURE STREAMLIT DEFAULT ────────────────────
+st.markdown('<div class="nd-label" style="margin-top:1.2rem">Upload files</div>', unsafe_allow_html=True)
 uploaded = st.file_uploader(
-    f"Upload {fmt} files",
+    f"Drop {fmt} files here or click to browse — multiple files supported, 10MB max per file",
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
