@@ -198,175 +198,75 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── File uploader — match RESULTS card style exactly ── */
-/* Outer wrapper: transparent, no border */
+/* ── File uploader — minimal dark theme, Streamlit default behaviour ── */
+/* Force dark bg on every wrapper layer */
 div[data-testid="stFileUploader"],
-div[data-testid="stFileUploader"] > div:first-child {
-    background: transparent !important;
-    border: none !important;
-    backdrop-filter: none !important;
-}
-
-/* The section Streamlit wraps files in — MUST be dark */
+div[data-testid="stFileUploader"] > div,
 div[data-testid="stFileUploader"] section,
 div[data-testid="stFileUploader"] section > div,
-div[data-testid="stFileUploader"] > div > div,
-div[data-testid="stFileUploader"] > div > div > div {
-    background: transparent !important;
-    background-color: transparent !important;
+div[data-testid="stFileUploaderDropzone"],
+div[data-testid="stFileUploaderDropzoneInstructions"],
+div[data-testid="stFileUploaderDropzoneInstructions"] > div {
+    background: rgba(8, 18, 32, 0.8) !important;
+    background-color: rgba(8, 18, 32, 0.8) !important;
 }
 
-/* Each file card — identical to .nd-card.nd-ok */
-div[data-testid="stFileUploaderFile"] {
-    background: rgba(8, 18, 32, 0.85) !important;
-    background-color: rgba(8, 18, 32, 0.85) !important;
-    backdrop-filter: blur(8px) !important;
-    border: 1px solid var(--glass-border) !important;
-    border-left: 4px solid var(--success-c) !important;
-    border-radius: 1.5rem !important;
-    padding: 0.9rem 1.3rem !important;
-    margin: 0.5rem 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 1rem !important;
-    transition: border-color 0.2s, box-shadow 0.2s !important;
-}
-div[data-testid="stFileUploaderFile"]:hover {
-    border-color: var(--glass-border-h) !important;
-    box-shadow: 0 0 15px rgba(0,255,255,0.15) !important;
-}
-
-/* Force dark on every child inside the file card */
-div[data-testid="stFileUploaderFile"] *,
-div[data-testid="stFileUploaderFile"] > div,
-div[data-testid="stFileUploaderFile"] > div > div,
-div[data-testid="stFileUploaderFile"] > div > div > div {
-    background: transparent !important;
-    background-color: transparent !important;
-}
-
-/* Filename — neon green, Fira Code — same as ✓ result filename */
-div[data-testid="stFileUploaderFileName"],
-div[data-testid="stFileUploaderFileName"] *,
-div[data-testid="stFileUploaderFile"] span.st-emotion-cache-1rpn56o,
-div[data-testid="stFileUploaderFile"] > div:first-child span {
-    color: var(--success-c) !important;
-    font-family: 'Fira Code', monospace !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    background: transparent !important;
-    word-break: break-all !important;
-    text-shadow: 0 0 6px rgba(94,255,188,0.3) !important;
-}
-
-/* File size — cyan dim, same as nd-meta */
-div[data-testid="stFileUploaderFileData"],
-div[data-testid="stFileUploaderFileData"] *,
-div[data-testid="stFileUploaderFile"] small {
-    color: rgba(0,255,255,0.55) !important;
-    font-family: 'Fira Code', monospace !important;
-    font-size: 0.7rem !important;
-    background: transparent !important;
-}
-
-/* File icon — neon green */
-div[data-testid="stFileUploaderFile"] svg {
-    color: var(--success-c) !important;
-    fill: var(--success-c) !important;
-    filter: drop-shadow(0 0 3px rgba(94,255,188,0.4)) !important;
-    flex-shrink: 0 !important;
-}
-
-/* Delete button — same neon outline pill as ↓ Save */
-div[data-testid="stFileUploaderDeleteBtn"] {
-    margin-left: auto !important;
-    flex-shrink: 0 !important;
-}
-div[data-testid="stFileUploaderDeleteBtn"] button {
-    background: transparent !important;
-    border: 1.2px solid var(--cyan) !important;
-    border-radius: 40px !important;
-    color: var(--cyan) !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.75rem !important;
-    font-weight: 500 !important;
-    padding: 5px 18px !important;
-    transition: all 0.2s !important;
-    white-space: nowrap !important;
-    cursor: pointer !important;
-}
-div[data-testid="stFileUploaderDeleteBtn"] button:hover {
-    background: rgba(255,119,128,0.1) !important;
-    border-color: #ff7780 !important;
-    color: #ff7780 !important;
-    box-shadow: 0 0 10px rgba(255,119,128,0.3) !important;
-}
-/* Hide default "×" text, replace with "Remove" */
-div[data-testid="stFileUploaderDeleteBtn"] button span {
-    font-size: 0 !important;
-    color: transparent !important;
-}
-div[data-testid="stFileUploaderDeleteBtn"] button::after {
-    content: "✕ Remove";
-    font-size: 0.72rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    color: inherit;
-}
-
-/* Progress bar inside upload card */
-div[data-testid="stFileUploaderFile"] [role="progressbar"] {
-    background: rgba(94,255,188,0.15) !important;
-    border-radius: 10px !important;
-}
-div[data-testid="stFileUploaderFile"] [role="progressbar"] > div {
-    background: linear-gradient(90deg, var(--success-c), var(--cyan)) !important;
-    border-radius: 10px !important;
-}
-
-/* Hide the default drag-and-drop zone text and restructure */
+/* Dropzone border */
 div[data-testid="stFileUploaderDropzone"] {
-    background: rgba(8, 18, 32, 0.5) !important;
-    border: 1px dashed var(--glass-border) !important;
-    border-radius: 1.8rem !important;
-    padding: 2rem !important;
-    text-align: center !important;
-    margin-bottom: 1rem !important;
+    border: 1px dashed rgba(0,255,255,0.3) !important;
+    border-radius: 1rem !important;
 }
 div[data-testid="stFileUploaderDropzone"]:hover {
-    border-color: rgba(0,255,255,0.5) !important;
+    border-color: rgba(0,255,255,0.6) !important;
 }
-div[data-testid="stFileUploaderDropzoneInstructions"] p {
-    color: var(--text-dim) !important;
-    font-size: 0.9rem !important;
+
+/* Hint text and size hint */
+div[data-testid="stFileUploaderDropzoneInstructions"] p,
+div[data-testid="stFileUploaderDropzoneInstructions"] span {
+    color: rgba(157, 198, 255, 0.8) !important;
 }
 div[data-testid="stFileUploaderDropzoneInstructions"] small {
     color: rgba(0,255,255,0.45) !important;
-    display: none !important;
 }
 
-/* Browse button - neon outline */
+/* Streamlit's native Browse files button — just tint it cyan */
 div[data-testid="stFileUploaderDropzone"] button {
-    background: transparent !important;
-    border: 1.2px solid var(--cyan) !important;
-    border-radius: 40px !important;
-    padding: 8px 28px !important;
+    border-color: var(--cyan) !important;
     color: var(--cyan) !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.8rem !important;
-    font-weight: 500 !important;
-    margin-top: 0.5rem !important;
-    transition: all 0.2s !important;
+    background: transparent !important;
+    border-radius: 40px !important;
 }
 div[data-testid="stFileUploaderDropzone"] button:hover {
     background: rgba(0,255,255,0.1) !important;
-    box-shadow: 0 0 12px rgba(0,255,255,0.4) !important;
 }
-
-/* Hide default Upload text - we use custom button */
 div[data-testid="stFileUploaderDropzone"] button span {
     color: var(--cyan) !important;
+}
+
+/* Uploaded file badge — dark bg, let Streamlit handle layout */
+div[data-testid="stFileUploaderFile"],
+div[data-testid="stFileUploaderFile"] > div,
+div[data-testid="stFileUploaderFile"] > div > div {
+    background: rgba(8, 18, 32, 0.9) !important;
+    background-color: rgba(8, 18, 32, 0.9) !important;
+}
+div[data-testid="stFileUploaderFile"] {
+    border-left: 3px solid var(--success-c) !important;
+    border-radius: 0.5rem !important;
+}
+/* Filename readable */
+div[data-testid="stFileUploaderFileName"] {
+    color: var(--success-c) !important;
+}
+/* File size readable */
+div[data-testid="stFileUploaderFileData"],
+div[data-testid="stFileUploaderFile"] small {
+    color: rgba(0,255,255,0.6) !important;
+}
+/* Icon tint */
+div[data-testid="stFileUploaderFile"] svg {
+    color: var(--success-c) !important;
+    fill: var(--success-c) !important;
 }
 
 /* Convert button — primary neon */
