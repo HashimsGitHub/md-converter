@@ -279,31 +279,52 @@ div[data-testid="stFileUploader"] button:hover::after {
     color: #fff !important;
 }
 
-/* ── Uploaded file badges — force dark on every layer ── */
+/* ── Uploaded file badges — nuke every possible layer ── */
 [data-testid="stFileUploaderFile"],
+[data-testid="stFileUploaderFile"] *,
 [data-testid="stFileUploaderFile"] > div,
 [data-testid="stFileUploaderFile"] > div > div,
+[data-testid="stFileUploaderFile"] > div > div > div,
 [data-testid="stFileUploaderFile"] span,
 [data-testid="stFileUploaderFile"] p,
-[data-testid="stFileUploaderFile"] small {
-    background: #030812 !important;
+[data-testid="stFileUploaderFile"] small,
+[data-testid="stFileUploaderFile"] li,
+[data-testid="stFileUploaderFile"] section {
+    background:       #030812 !important;
     background-color: #030812 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
 }
 [data-testid="stFileUploaderFile"] {
+    border: none !important;
     border-left: 3px solid var(--cyan) !important;
     border-radius: 0.75rem !important;
     padding: 0.4rem 0.8rem !important;
+    overflow: hidden;
 }
-[data-testid="stFileUploaderFileName"] {
-    color: #eef5ff !important;
-    font-family: 'Fira Code', monospace !important;
-    font-size: 0.78rem !important;
-    background: transparent !important;
+/* Filename text — neon green, Fira Code */
+[data-testid="stFileUploaderFileName"],
+[data-testid="stFileUploaderFileName"] * {
+    color:        #5effbc !important;
+    font-family:  'Fira Code', monospace !important;
+    font-size:    0.78rem !important;
+    font-weight:  500 !important;
+    background:   transparent !important;
+    background-color: transparent !important;
+    text-shadow:  0 0 8px rgba(94,255,188,0.5) !important;
 }
-[data-testid="stFileUploaderFileData"] {
-    color: rgba(0,255,255,0.6) !important;
-    font-size: 0.7rem !important;
-    background: transparent !important;
+/* File size text */
+[data-testid="stFileUploaderFileData"],
+[data-testid="stFileUploaderFileData"] * {
+    color:       rgba(0,255,255,0.6) !important;
+    font-size:   0.7rem !important;
+    background:  transparent !important;
+    background-color: transparent !important;
+}
+/* File icon area */
+[data-testid="stFileUploaderFile"] svg {
+    color: var(--cyan) !important;
+    fill:  var(--cyan) !important;
 }
 [data-testid="stFileUploaderDeleteBtn"] button {
     color: rgba(0,255,255,0.5) !important;
