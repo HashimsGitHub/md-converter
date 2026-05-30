@@ -402,21 +402,7 @@ div[data-testid="stDownloadButton"] > button:hover {
 div[data-testid="stStatusWidget"] { display: none !important; }
 
 
-/* ── FILE UPLOADER — container only, zero button interference ── */
-/* Style the outer box only — let Streamlit render the button 100% natively */
-.stFileUploader {
-    background-color: rgba(0, 255, 65, 0.03) !important;
-    border: 2px solid #00ff41 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 0 12px rgba(0, 255, 65, 0.15) !important;
-}
-
-/* Uploaded file badge text only — NOT the dropzone button */
-[data-testid="stFileUploaderFileName"],
-[data-testid="stFileUploaderFileData"] {
-    color: #00ff41 !important;
-    font-family: 'Fira Code', monospace !important;
-}
+/* ── FILE UPLOADER — zero CSS, fully Streamlit native ── */
 
 /* ── Column alignment fix for result rows ── */
 [data-testid="stColumn"] { align-items: center !important; }
@@ -455,11 +441,10 @@ ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 # ── File uploader - NO CUSTOM CSS, using Streamlit default (readable) ─────────
 st.markdown('<div class="nd-label" style="margin-top:1.2rem">Upload files</div>', unsafe_allow_html=True)
 uploaded = st.file_uploader(
-    "Choose files",
+    f"📂 Upload {fmt} files (10MB max per file)",
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
-    label_visibility="collapsed",
 )
 
 st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
