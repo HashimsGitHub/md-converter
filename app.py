@@ -402,52 +402,18 @@ div[data-testid="stDownloadButton"] > button:hover {
 div[data-testid="stStatusWidget"] { display: none !important; }
 
 
-/* ── FILE UPLOADER — class-based selectors, no data-testid, no pseudo-elements ── */
+/* ── FILE UPLOADER — container only, zero button interference ── */
+/* Style the outer box only — let Streamlit render the button 100% natively */
 .stFileUploader {
-    background-color: rgba(0, 255, 65, 0.05) !important;
+    background-color: rgba(0, 255, 65, 0.03) !important;
     border: 2px solid #00ff41 !important;
     border-radius: 10px !important;
-    padding: 10px !important;
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.2) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.15) !important;
 }
 
-/* All text inside uploader */
-.stFileUploader label,
-.stFileUploader span,
-.stFileUploader p,
-.stFileUploader small {
-    color: #00ff41 !important;
-    font-family: 'Fira Code', monospace !important;
-}
-
-/* Upload button */
-.stFileUploader button {
-    background-color: rgba(0, 0, 0, 0.8) !important;
-    color: #00ff41 !important;
-    border: 2px solid #00ff41 !important;
-    border-radius: 40px !important;
-    font-family: 'Fira Code', monospace !important;
-    font-weight: bold !important;
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3) !important;
-    transition: all 0.3s ease !important;
-}
-
-.stFileUploader button:hover {
-    background-color: rgba(0, 255, 65, 0.15) !important;
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.5) !important;
-}
-
-/* Uploaded file badge */
-.stFileUploader [data-testid="stFileUploaderFile"] {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    border-left: 3px solid #00ff41 !important;
-    border-radius: 6px !important;
-}
-
-.stFileUploader [data-testid="stFileUploaderFileName"],
-.stFileUploader [data-testid="stFileUploaderFileData"],
-.stFileUploader [data-testid="stFileUploaderFile"] span,
-.stFileUploader [data-testid="stFileUploaderFile"] small {
+/* Uploaded file badge text only — NOT the dropzone button */
+[data-testid="stFileUploaderFileName"],
+[data-testid="stFileUploaderFileData"] {
     color: #00ff41 !important;
     font-family: 'Fira Code', monospace !important;
 }
