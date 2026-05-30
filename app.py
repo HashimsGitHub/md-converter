@@ -197,32 +197,7 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
 
-/* ── Custom File Uploader Styling ── */
-div[data-testid="stFileUploader"] label,
-div[data-testid="stFileUploader"] small,
-div[data-testid="stFileUploader"] span,
-div[data-testid="stFileUploader"] p {
-    color: #000000 !important;
-}
-
-div[data-testid="stFileUploader"] section button {
-    color: #000000 !important;
-}
-
-div[data-testid="stFileUploader"] section {
-    background: rgba(255,255,255,0.95) !important;
-    border-radius: 12px !important;
-}
-
-div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"] > div > span {
-    display: none !important;
-}
-
-div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzoneInstructions"]::after {
-    content: "Browse for files";
-    color: #000000;
-    font-weight: 600;
-}
+/* uploader block 1 removed */
 
 
 /* ── Convert button ── */
@@ -427,113 +402,62 @@ div[data-testid="stDownloadButton"] > button:hover {
 div[data-testid="stStatusWidget"] { display: none !important; }
 
 
-/* ── Custom File Uploader Styling ── */
-div[data-testid="stFileUploader"] section {
-    background: rgba(8, 18, 32, 0.85) !important;
-    border: 1.5px solid rgba(0,255,255,0.35) !important;
+/* ── FILE UPLOADER — single clean block ── */
+/* Dark section background, neon cyan border */
+div[data-testid="stFileUploader"] section,
+div[data-testid="stFileUploader"] section > div,
+div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {
+    background: rgba(8, 18, 32, 0.9) !important;
+    background-color: rgba(8, 18, 32, 0.9) !important;
+}
+div[data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {
+    border: 1.5px solid rgba(0, 255, 255, 0.35) !important;
     border-radius: 1.25rem !important;
-    padding: 1rem !important;
+    padding: 1.5rem !important;
 }
 
-div[data-testid="stFileUploader"] button {
-    background: rgba(8,18,32,0.95) !important;
-    border: 1.5px solid #5effbc !important;
-    border-radius: 40px !important;
-    color: #5effbc !important;
-    font-family: 'Fira Code', monospace !important;
-    font-weight: 600 !important;
-    box-shadow: 0 0 12px rgba(94,255,188,0.25) !important;
-}
-
-div[data-testid="stFileUploader"] button:hover {
-    box-shadow: 0 0 18px rgba(94,255,188,0.45) !important;
-    border-color: #5effbc !important;
-}
-
-div[data-testid="stFileUploader"] button * {
-    color: #5effbc !important;
-}
-
-div[data-testid="stFileUploader"] small,
-div[data-testid="stFileUploader"] p,
-div[data-testid="stFileUploader"] span {
-    color: #5effbc !important;
-    font-family: 'Fira Code', monospace !important;
-}
-
-
-
-/* Hide Streamlit's default Upload button and keep only Browse for files */
-div[data-testid="stFileUploader"] button[kind="secondary"] {
-    color: #5effbc !important;
-    border-color: #5effbc !important;
-}
-
-div[data-testid="stFileUploader"] button[kind="secondary"]::after {
-    content: "Browse for Files";
-}
-
-div[data-testid="stFileUploader"] button[kind="secondary"] * {
-    color: #5effbc !important;
-}
-
-/* Hide helper text that can create duplicate upload wording */
-div[data-testid="stFileUploader"] small {
+/* Hide the outer large "Browse for files" zone wrapper — keep only the button */
+div[data-testid="stFileUploaderDropzoneInstructions"] {
     display: none !important;
 }
 
+/* The actual browse button — neon green, black bg */
+div[data-testid="stFileUploader"] button {
+    background: #000000 !important;
+    border: 1.5px solid #5effbc !important;
+    border-radius: 40px !important;
+    padding: 8px 28px !important;
+    box-shadow: 0 0 12px rgba(94,255,188,0.25) !important;
+    transition: box-shadow 0.2s !important;
+}
+div[data-testid="stFileUploader"] button:hover {
+    box-shadow: 0 0 20px rgba(94,255,188,0.5) !important;
+}
+div[data-testid="stFileUploader"] button span,
+div[data-testid="stFileUploader"] button p {
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+}
+
+/* Uploaded file badge */
+div[data-testid="stFileUploaderFileName"],
+div[data-testid="stFileUploaderFileName"] *,
+div[data-testid="stFileUploaderFileData"],
+div[data-testid="stFileUploaderFile"] small {
+    color: #5effbc !important;
+    font-family: 'Fira Code', monospace !important;
+}
+div[data-testid="stFileUploaderFile"],
+div[data-testid="stFileUploaderFile"] > div,
+div[data-testid="stFileUploaderFile"] > div > div {
+    background: rgba(8,18,32,0.9) !important;
+    background-color: rgba(8,18,32,0.9) !important;
+}
 
 /* ── Column alignment fix for result rows ── */
 [data-testid="stColumn"] { align-items: center !important; }
-
-/* ===== FINAL FILE UPLOADER OVERRIDE ===== */
-
-/* Hide helper/instruction text */
-div[data-testid="stFileUploader"] small,
-div[data-testid="stFileUploader"] p {
-    display: none !important;
-}
-
-/* Upload area */
-div[data-testid="stFileUploader"] section {
-    background: rgba(8,18,32,0.85) !important;
-    border: 1px solid rgba(0,255,255,0.35) !important;
-    border-radius: 24px !important;
-}
-
-/* Hide ALL original button text */
-div[data-testid="stFileUploader"] button * {
-    visibility: hidden !important;
-}
-
-/* Custom neon button */
-div[data-testid="stFileUploader"] button {
-    position: relative !important;
-    min-width: 280px !important;
-    min-height: 48px !important;
-    background: rgba(8,18,32,0.95) !important;
-    border: 1.5px solid #5effbc !important;
-    border-radius: 40px !important;
-    box-shadow: 0 0 15px rgba(94,255,188,0.25) !important;
-}
-
-/* Single visible label */
-div[data-testid="stFileUploader"] button::before {
-    content: "Browse for Files";
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #5effbc !important;
-    font-family: 'Fira Code', monospace !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
-}
-
-div[data-testid="stFileUploader"] button:hover {
-    box-shadow: 0 0 22px rgba(94,255,188,0.5) !important;
-}
 
 </style>
 """, unsafe_allow_html=True)
