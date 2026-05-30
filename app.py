@@ -196,135 +196,7 @@ div[data-testid="stRadio"] > div > label:has(input:checked) {
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 
-/* ── FILE UPLOADER - DEFAULT STREAMLIT TEXT, NO DUPLICATES ── */
-/* Main container background */
-div[data-testid="stFileUploader"] {
-    background: rgba(8, 18, 32, 0.6) !important;
-    border-radius: 1rem !important;
-}
-
-/* Dropzone area */
-div[data-testid="stFileUploaderDropzone"] {
-    background: rgba(8, 18, 32, 0.8) !important;
-    border: 1px dashed rgba(0, 255, 255, 0.4) !important;
-    border-radius: 1rem !important;
-    padding: 1.5rem !important;
-}
-
-div[data-testid="stFileUploaderDropzone"]:hover {
-    border-color: rgba(0, 255, 255, 0.7) !important;
-    background: rgba(10, 22, 40, 0.9) !important;
-}
-
-/* Dropzone text - make it visible */
-div[data-testid="stFileUploaderDropzoneInstructions"] p,
-div[data-testid="stFileUploaderDropzoneInstructions"] span {
-    color: #9dc6ff !important;
-    font-size: 0.9rem !important;
-}
-
-/* File size hint text (10MB) - cyan color to match button */
-div[data-testid="stFileUploaderDropzoneInstructions"] small {
-    color: rgba(0, 255, 255, 0.6) !important;
-    font-size: 0.75rem !important;
-}
-
-/* Browse button - default Streamlit text, styled to match hint text color */
-div[data-testid="stFileUploaderDropzone"] button {
-    background: transparent !important;
-    border: 1.5px solid rgba(0, 255, 255, 0.6) !important;
-    border-radius: 40px !important;
-    padding: 6px 24px !important;
-    margin-top: 8px !important;
-}
-
-/* Button text - SAME COLOR as file size hint (rgba(0,255,255,0.6)) */
-div[data-testid="stFileUploaderDropzone"] button span {
-    color: rgba(0, 255, 255, 0.6) !important;
-    font-weight: 500 !important;
-}
-
-div[data-testid="stFileUploaderDropzone"] button:hover {
-    background: rgba(0, 255, 255, 0.1) !important;
-    border-color: rgba(0, 255, 255, 0.8) !important;
-}
-div[data-testid="stFileUploaderDropzone"] button:hover span {
-    color: rgba(0, 255, 255, 0.9) !important;
-}
-
-/* Remove any duplicate pseudo-element text */
-div[data-testid="stFileUploader"] button::after,
-div[data-testid="stFileUploader"] button::before {
-    display: none !important;
-}
-
-/* ── UPLOADED FILE CARDS - COMPLETELY READABLE ── */
-/* Each uploaded file card */
-div[data-testid="stFileUploaderFile"] {
-    background: #0a1222 !important;
-    border: 1px solid rgba(0, 255, 255, 0.25) !important;
-    border-left: 4px solid var(--success-c) !important;
-    border-radius: 0.75rem !important;
-    padding: 0.75rem 1rem !important;
-    margin: 0.5rem 0 !important;
-}
-
-/* File info container */
-div[data-testid="stFileUploaderFile"] > div {
-    background: transparent !important;
-}
-
-/* File name - NEON GREEN, clearly visible */
-div[data-testid="stFileUploaderFileName"],
-div[data-testid="stFileUploaderFile"] span[data-testid="stMarkdown"] p,
-div[data-testid="stFileUploaderFile"] .stMarkdown {
-    color: var(--success-c) !important;
-    font-family: 'Fira Code', monospace !important;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
-    background: transparent !important;
-}
-
-/* File size text - cyan, visible */
-div[data-testid="stFileUploaderFileData"],
-div[data-testid="stFileUploaderFile"] small,
-div[data-testid="stFileUploaderFile"] .stMarkdown small {
-    color: rgba(0, 255, 255, 0.7) !important;
-    font-size: 0.7rem !important;
-    font-family: 'Fira Code', monospace !important;
-}
-
-/* File icon */
-div[data-testid="stFileUploaderFile"] svg {
-    color: var(--success-c) !important;
-    fill: var(--success-c) !important;
-}
-
-/* Remove button - styled like Save button */
-div[data-testid="stFileUploaderDeleteBtn"] button {
-    background: transparent !important;
-    border: 1px solid rgba(0, 255, 255, 0.4) !important;
-    border-radius: 30px !important;
-    color: rgba(0, 255, 255, 0.7) !important;
-    font-size: 0.7rem !important;
-    padding: 4px 12px !important;
-}
-
-div[data-testid="stFileUploaderDeleteBtn"] button:hover {
-    background: rgba(255, 119, 128, 0.15) !important;
-    border-color: #ff7780 !important;
-    color: #ff7780 !important;
-}
-
-/* Progress bar inside upload card */
-div[data-testid="stFileUploaderFile"] [role="progressbar"] {
-    background: rgba(94, 255, 188, 0.15) !important;
-    border-radius: 10px !important;
-}
-div[data-testid="stFileUploaderFile"] [role="progressbar"] > div {
-    background: linear-gradient(90deg, var(--success-c), var(--cyan)) !important;
-    border-radius: 10px !important;
-}
+/* ── FILE UPLOADER - 100% STREAMLIT DEFAULT, NO OVERRIDES ── */
 
 /* ── Convert button ── */
 div[data-testid="stButton"] > button {
@@ -561,13 +433,11 @@ fmt = st.radio("format", ["PDF", "PPTX", "DOCX"], horizontal=True, label_visibil
 ACCEPT_MAP = {"PDF": [".pdf"], "PPTX": [".pptx"], "DOCX": [".docx"]}
 
 # ── File uploader ─────────────────────────────────────────────────────────────
-st.markdown('<div class="nd-label" style="margin-top:1.2rem">Upload files</div>', unsafe_allow_html=True)
 uploaded = st.file_uploader(
-    f"Drop {fmt} files here or click to browse — multiple files supported, 10MB max per file",
+    f"Upload {fmt} files",
     type=ACCEPT_MAP[fmt],
     accept_multiple_files=True,
     key=f"uploader_{fmt}",
-    label_visibility="collapsed",
 )
 
 st.markdown("<div style='height:0.75rem'></div>", unsafe_allow_html=True)
